@@ -110,7 +110,6 @@ class ValidationTests(unittest.TestCase):
 
     def test_output_schema_matches_canonical_constraints(self):
         schema = adapter.SCHEMA['properties']['title']
-        self.assertEqual(schema['maxLength'], title.MAX_TITLE_LENGTH - 9)
         for category in title.CATEGORIES:
             self.assertRegex(f'[{category}] 对象｜目标', schema['pattern'])
         self.assertRegex('', schema['pattern'])
@@ -127,6 +126,56 @@ class ValidationTests(unittest.TestCase):
         data.pop('status')
         with self.assertRaises(ValueError):
             title.validate_candidate(data, '')
+
+
+class DecisionGuardTests(unittest.TestCase):
+    def context(self, text, current='260904 ' + CANONICAL):
+        return {'current_title': current, 'current_canonical_title': title.canonical_title(current),
+                'completion_context_complete': True,
+                'recent_turns': [{'messages': [{'role': 'user', 'text': text}]}]}
+
+    def test_exact_endings_override_missed_model_signal(self):
+        for text in ('可以了，谢谢', '确认了，可以不用追踪了', '验收通过，收尾吧',
+                     '验收没问题，可以收尾', '这个通过了，结束吧', '可以收尾了',
+                     '这个解决了', '不用继续了', '不用追踪了', 'done', '就这样', '问题已经修好了'):
+            with self.subTest(text=text):
+                result = title.normalize_decision(candidate()[0], self.context(text))
+                self.assertEqual(result['status'], 'completed')
+
+    def test_punctuation_with_domain_meaning_is_not_format_cleanup(self):
+        for old, new in (('🧩 C++｜实现', '[实现] C#｜实现'),
+                         ('🧩 Node 1.2｜配置', '[配置] Node 12｜配置')):
+            result = title.normalize_decision(candidate(action='rename', text=new)[0], self.context('换到新目标', old))
+            self.assertEqual(result['action'], 'rename')
+
+    def test_real_category_or_object_goal_change_is_not_format_cleanup(self):
+        for old, new in (('[分析] API｜错误处理', '[实现] API｜错误处理'),
+                         ('[实现] AB｜C', '[实现] A｜BC'),
+                         ('🧩 AB｜C', '[实现] A｜BC')):
+            result = title.normalize_decision(candidate(action='rename', text=new)[0], self.context('转向新的长期工作', old))
+            self.assertEqual(result['action'], 'rename')
+            self.assertEqual(result['title'], new)
+
+    def test_substantive_suffix_quotes_questions_and_negations_are_not_endings(self):
+        for text in ('这个功能验收通过，接下来处理另一个问题', '可以了，谢谢，接下来做登录页',
+                     '还不能收尾', '还没done', 'done?', '> done', '"done"', '示例：验收通过，收尾吧'):
+            with self.subTest(text=text):
+                self.assertEqual(title.normalize_decision(candidate()[0], self.context(text))['status'], 'active')
+
+    def test_continue_and_incomplete_context_cannot_complete(self):
+        for text in ('继续', '可以，继续', 'continue'):
+            self.assertEqual(title.normalize_decision(candidate('completed')[0], self.context(text))['status'], 'active')
+        context = {**self.context('验收通过，收尾吧'), 'completion_context_complete': False}
+        self.assertEqual(title.normalize_decision(candidate('completed')[0], context)['status'], 'active')
+
+    def test_identical_body_cannot_trigger_format_migration(self):
+        for old, new in (('🛠️ clip-helper 字幕裁剪修复', '[排障] clip-helper｜字幕裁剪修复'),
+                         ('🎨 登录表单设计', '[设计] 登录表单｜设计')):
+            result = title.normalize_decision(candidate(action='rename', text=new)[0], self.context('继续', old))
+            self.assertEqual(result['action'], 'keep')
+        result = title.normalize_decision(candidate(action='rename', text='[实现] 支付回调｜签名校验')[0],
+                                          self.context('改为实现支付回调', '🎨 登录表单设计'))
+        self.assertEqual(result['action'], 'rename')
 
 
 class LifecycleTests(unittest.TestCase):
@@ -242,6 +291,13 @@ class LifecycleTests(unittest.TestCase):
         result = self.process(lambda _: candidate('completed'))
         self.assertEqual(result['completion_status'], 'active')
         self.assertFalse(result['title'].startswith('✓'))
+
+    def test_attachment_is_incomplete_completion_evidence(self):
+        self.process()
+        self.append('验收通过，收尾吧')
+        self.backend.thread['turns'][-1]['items'][0]['content'].append({'type': 'image', 'url': 'fixture'})
+        result = self.process(lambda _: candidate('completed'))
+        self.assertEqual(result['completion_status'], 'active')
 
     def test_missing_created_at_never_uses_state_title_or_updated_at(self):
         self.process()

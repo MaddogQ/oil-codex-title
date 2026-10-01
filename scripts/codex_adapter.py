@@ -200,8 +200,8 @@ SCHEMA = {
     "type": "object", "additionalProperties": False,
     "properties": {
         "action": {"type": "string", "enum": ["keep", "rename"]},
-        "title": {"type": "string", "maxLength": 39,
-                  "pattern": r"^(?:\[(?:" + "|".join(CATEGORIES) + r")\] [^｜]+｜[^｜]+)?$"},
+        "title": {"type": "string",
+                  "pattern": r"^(?:\[(?:" + "|".join(CATEGORIES) + r")\] [^｜|]+｜[^｜|]+)?$"},
         "reason": {"type": "string"},
         "status": {"type": "string", "enum": ["active", "completed"]},
     },

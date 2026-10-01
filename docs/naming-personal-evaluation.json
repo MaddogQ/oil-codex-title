@@ -1,0 +1,2287 @@
+{
+  "model": "gpt-5.6-luna",
+  "service_tier": "priority",
+  "cases": 95,
+  "passed": 89,
+  "model_cases": 93,
+  "median_seconds": 3.88,
+  "notice": "passed 检查模型输出经程序确定性保护后的决策；model_candidate/model_errors 单独保留原始模型表现。有限合成案例不代表普遍准确率，也不验证桌面显示。",
+  "results": [
+    {
+      "case": "问候转需求",
+      "action": "rename",
+      "title": "[分析] Skill｜按用途分类",
+      "reason": "问候后提出了明确的盘点分类需求",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[分析] Skill｜按用途分类",
+        "reason": "问候后提出了明确的盘点分类需求",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.56,
+      "usage": {
+        "input_tokens": 7697,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 100
+      }
+    },
+    {
+      "case": "项目甲注册",
+      "action": "rename",
+      "title": "[排障] 邮箱注册｜注册失败排查",
+      "reason": "原标题过于泛化，需明确注册故障主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] 邮箱注册｜注册失败排查",
+        "reason": "原标题过于泛化，需明确注册故障主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.23,
+      "usage": {
+        "input_tokens": 7683,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "项目乙注册",
+      "action": "rename",
+      "title": "[排障] 邮箱注册｜验证码过期修复",
+      "reason": "原标题未体现验证码过期故障，主线为注册排障",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] 邮箱注册｜验证码过期修复",
+        "reason": "原标题未体现验证码过期故障，主线为注册排障",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.36,
+      "usage": {
+        "input_tokens": 7683,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 74
+      }
+    },
+    {
+      "case": "同项目不同模块",
+      "action": "rename",
+      "title": "[排障] 支付回调｜开通会员",
+      "reason": "原标题过于泛化，需明确支付回调故障主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] 支付回调｜开通会员",
+        "reason": "原标题过于泛化，需明确支付回调故障主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.91,
+      "usage": {
+        "input_tokens": 7687,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 52,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "提交不是新目标",
+      "action": "keep",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "仍是邮箱注册故障修复主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "仍是邮箱注册故障修复主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.06,
+      "usage": {
+        "input_tokens": 7747,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "解释不是新目标",
+      "action": "keep",
+      "title": "[排障] 支付回调｜幂等修复",
+      "reason": "主线仍是支付回调重复发货修复",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 支付回调｜幂等修复",
+        "reason": "主线仍是支付回调重复发货修复",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.78,
+      "usage": {
+        "input_tokens": 7735,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 51,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "持续新主线",
+      "action": "rename",
+      "title": "[创作] Orion 对比视频｜选题与脚本",
+      "reason": "主线已转为 Orion 对比视频创作",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] Orion 对比视频｜选题与脚本",
+        "reason": "主线已转为 Orion 对比视频创作",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.25,
+      "usage": {
+        "input_tokens": 7740,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 141,
+        "reasoning_output_tokens": 89
+      }
+    },
+    {
+      "case": "视频标题不是任务名",
+      "action": "rename",
+      "title": "[创作] Orion 图像模型评测视频｜标题策划",
+      "reason": "原标题泛化，当前需求明确为视频标题创作",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] Orion 图像模型评测视频｜标题策划",
+        "reason": "原标题泛化，当前需求明确为视频标题创作",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 8.56,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 45
+      }
+    },
+    {
+      "case": "外层项目不重复",
+      "action": "rename",
+      "title": "[排障] 登录页｜发送验证码无响应修复",
+      "reason": "原标题缺少页面与按钮对象",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] 登录页｜发送验证码无响应修复",
+        "reason": "原标题缺少页面与按钮对象",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.23,
+      "usage": {
+        "input_tokens": 7686,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 164,
+        "reasoning_output_tokens": 117
+      }
+    },
+    {
+      "case": "内容仓库不是主角",
+      "action": "rename",
+      "title": "[创作] Orion 模型｜人像一致性评测视频",
+      "reason": "原标题过于泛化，需明确视频创作主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] Orion 模型｜人像一致性评测视频",
+        "reason": "原标题过于泛化，需明确视频创作主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.99,
+      "usage": {
+        "input_tokens": 7684,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 53,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "准确标题保持",
+      "action": "keep",
+      "title": "[设计] 登录表单｜设计",
+      "reason": "仍是登录表单的设计主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 登录表单｜设计",
+        "reason": "仍是登录表单的设计主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.53,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 73,
+        "reasoning_output_tokens": 29
+      }
+    },
+    {
+      "case": "准确旧正文不补格式",
+      "action": "keep",
+      "title": "[设计] 登录表单｜设计",
+      "reason": "仍是登录表单设计主线，仅调整间距和提示",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 登录表单｜设计",
+        "reason": "仍是登录表单设计主线，仅调整间距和提示",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.27,
+      "usage": {
+        "input_tokens": 7683,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 47
+      }
+    },
+    {
+      "case": "仅有问候",
+      "action": "keep",
+      "title": "",
+      "status": "active",
+      "reason": "只有问候或确认，缺少新的命名依据",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "",
+        "status": "active",
+        "reason": "只有问候或确认，缺少新的命名依据"
+      },
+      "model_errors": [],
+      "seconds": 0.0,
+      "usage": {}
+    },
+    {
+      "case": "仅有继续",
+      "action": "keep",
+      "title": "[排障] 注册校验｜修复",
+      "reason": "用户明确继续工作",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 注册校验｜修复",
+        "reason": "主线未变，用户仅表示继续",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.25,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 30
+      }
+    },
+    {
+      "case": "相对日期去歧义",
+      "action": "rename",
+      "title": "[调研] Maple 公司设计岗位｜整理匹配经验",
+      "reason": "原标题缺少具体对象，需明确持续调研目标",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[调研] Maple 公司设计岗位｜整理匹配经验",
+        "reason": "原标题缺少具体对象，需明确持续调研目标",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.67,
+      "usage": {
+        "input_tokens": 7679,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 116,
+        "reasoning_output_tokens": 64
+      }
+    },
+    {
+      "case": "对话日期不进canonical",
+      "action": "rename",
+      "title": "[规划] 路演｜日程与待办",
+      "reason": "原标题过于笼统，已明确路演规划主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[规划] 路演｜日程与待办",
+        "reason": "原标题过于笼统，已明确路演规划主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.5,
+      "usage": {
+        "input_tokens": 7678,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 46
+      }
+    },
+    {
+      "case": "提示注入是数据",
+      "action": "rename",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "原标题缺乏具体主线，当前需求是排查邮箱注册问题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "原标题缺乏具体主线，当前需求是排查邮箱注册问题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.39,
+      "usage": {
+        "input_tokens": 7704,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 47
+      }
+    },
+    {
+      "case": "冲突靠内容区分",
+      "action": "rename",
+      "title": "[创作] Orion 评测视频｜重新发布",
+      "reason": "原标题过于泛化，需明确视频主题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] Orion 评测视频｜重新发布",
+        "reason": "原标题过于泛化，需明确视频主题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.28,
+      "usage": {
+        "input_tokens": 7700,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "同项目页面区分",
+      "action": "rename",
+      "title": "[优化] 课程详情页｜加载性能",
+      "reason": "原标题泛化，用户明确优化课程详情页加载性能",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[优化] 课程详情页｜加载性能",
+        "reason": "原标题泛化，用户明确优化课程详情页加载性能",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.38,
+      "usage": {
+        "input_tokens": 7678,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "内容与工具区分",
+      "action": "rename",
+      "title": "[排障] video-publisher｜字幕裁剪修复",
+      "reason": "原标题偏离当前字幕故障主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] video-publisher｜字幕裁剪修复",
+        "reason": "原标题偏离当前字幕故障主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.19,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "Monorepo子项目",
+      "action": "rename",
+      "title": "[排障] seller-console 订单导出｜超时修复",
+      "reason": "原标题泛化，主线是 seller-console 超时修复",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] seller-console 订单导出｜超时修复",
+        "reason": "原标题泛化，主线是 seller-console 超时修复",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.16,
+      "usage": {
+        "input_tokens": 7707,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 53,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "桌面修改子项目",
+      "action": "rename",
+      "title": "[排障] Maple 登录｜修复重定向循环",
+      "reason": "原标题泛化，需明确登录循环故障",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] Maple 登录｜修复重定向循环",
+        "reason": "原标题泛化，需明确登录循环故障",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.36,
+      "usage": {
+        "input_tokens": 7694,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "跨项目同步",
+      "action": "rename",
+      "title": "[实现] Cedar 邮箱注册｜校验同步",
+      "reason": "原标题过于泛化，需明确跨项目同步目标",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[实现] Cedar 邮箱注册｜校验同步",
+        "reason": "原标题过于泛化，需明确跨项目同步目标",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.61,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 108,
+        "reasoning_output_tokens": 58
+      }
+    },
+    {
+      "case": "内容模型名称保留",
+      "action": "rename",
+      "title": "[分析] H3 / H3 Max｜推理与编码表现对比",
+      "reason": "原标题泛化，现有明确模型对比目标",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[分析] H3 / H3 Max｜推理与编码表现对比",
+        "reason": "原标题泛化，现有明确模型对比目标",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.41,
+      "usage": {
+        "input_tokens": 7705,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 66
+      }
+    },
+    {
+      "case": "旧标题不迁移主线",
+      "action": "keep",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "仍是邮箱注册故障修复主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "仍是邮箱注册故障修复主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.02,
+      "usage": {
+        "input_tokens": 7683,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "视频修复仍属内容",
+      "action": "keep",
+      "title": "[创作] Orion 评测视频｜继续制作",
+      "reason": "同一视频制作主线，黑帧修正属于子步骤",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[创作] Orion 评测视频｜继续制作",
+        "reason": "同一视频制作主线，黑帧修正属于子步骤",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.09,
+      "usage": {
+        "input_tokens": 7708,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 52,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "工具修复不归视频",
+      "action": "keep",
+      "title": "[排障] clip-helper｜字幕裁剪修复",
+      "reason": "主线是修复 clip-helper 字幕裁剪逻辑",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] clip-helper｜字幕裁剪修复",
+        "reason": "主线是修复 clip-helper 字幕裁剪逻辑",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.12,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "方法整理不归页面设计",
+      "action": "rename",
+      "title": "[创作] 页面还原经验｜整理方法文档",
+      "reason": "目标是整理可复用的方法文档，非页面实现",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] 页面还原经验｜整理方法文档",
+        "reason": "目标是整理可复用的方法文档，非页面实现",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.98,
+      "usage": {
+        "input_tokens": 7709,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 122,
+        "reasoning_output_tokens": 69
+      }
+    },
+    {
+      "case": "内容对象前置",
+      "action": "keep",
+      "title": "[分析] Atlas 与 Atlas Pro｜编码表现对比",
+      "reason": "原标题主线准确，保持模型对比分析",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Atlas 与 Atlas Pro｜编码表现对比",
+        "reason": "原标题主线准确，保持模型对比分析",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.88,
+      "usage": {
+        "input_tokens": 7690,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "无分隔符旧标题保持",
+      "action": "keep",
+      "title": "[设计] 登录表单｜设计",
+      "reason": "仍是登录表单设计主线，仅调整细节",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 登录表单｜设计",
+        "reason": "仍是登录表单设计主线，仅调整细节",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.36,
+      "usage": {
+        "input_tokens": 7683,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-可以了，谢谢",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示可以了并致谢，任务收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 5.77,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-确认了，可以不用追踪了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确确认并要求停止追踪",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.17,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 44,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-验收通过，收尾吧",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确验收通过并要求收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.05,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-验收没问题，可以收尾",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确验收通过并要求收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 5.17,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-这个通过了，结束吧",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示通过并要求结束",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 4.48,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 43,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-可以收尾了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示可以收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 4.99,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 42,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-这个解决了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示问题已解决",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 7.73,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 42,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-不用继续了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示不用继续，主线未变",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.0,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-不用追踪了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示不用继续追踪",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.72,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 29
+      }
+    },
+    {
+      "case": "整体收尾-done",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示完成",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.47,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 77,
+        "reasoning_output_tokens": 35
+      }
+    },
+    {
+      "case": "整体收尾-就这样",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示就这样，分析主线收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 2.83,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "整体收尾-问题已经修好了",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户明确表示问题已经修好了",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 4.52,
+      "usage": {
+        "input_tokens": 7694,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 38
+      }
+    },
+    {
+      "case": "普通确认-好",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "主线未变，用户仅作确认",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，用户仅作确认",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.25,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "普通确认-好的",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "仅普通确认，主线未变且未表达收尾",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "仅普通确认，主线未变且未表达收尾",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.88,
+      "usage": {
+        "input_tokens": 7685,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 49,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "普通确认-可以",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "主线未变，用户仅作普通确认",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，用户仅作普通确认",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.88,
+      "usage": {
+        "input_tokens": 7687,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "普通确认-收到",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "仅普通确认，主线未变化",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "仅普通确认，主线未变化",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.72,
+      "usage": {
+        "input_tokens": 7687,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 28
+      }
+    },
+    {
+      "case": "普通确认-谢谢",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "仅普通致谢，主线未变且无收尾意图",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "仅普通致谢，主线未变且无收尾意图",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.95,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 80,
+        "reasoning_output_tokens": 27
+      }
+    },
+    {
+      "case": "普通确认-ok",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "主线未变，用户仅普通确认",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，用户仅普通确认",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.11,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "普通确认-可以，继续",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确继续工作",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，用户仅表示继续",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.75,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "普通确认-好的，下一步看调用链",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "仍在分析同一调用机制，用户要求继续推进",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "仍在分析同一调用机制，用户要求继续推进",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.14,
+      "usage": {
+        "input_tokens": 7697,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "部分验收后继续",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "仍在分析同一后台调用主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "仍在分析同一后台调用主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.73,
+      "usage": {
+        "input_tokens": 7703,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "验收后新实质目标",
+      "action": "rename",
+      "title": "[实现] 登录页｜功能实现",
+      "reason": "用户明确转向登录页实现这一新主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[实现] 登录页｜功能实现",
+        "reason": "用户明确转向登录页实现这一新主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.31,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 65
+      }
+    },
+    {
+      "case": "助手全部完成不足",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户继续分析同一调用机制",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "用户继续分析同一调用机制",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.75,
+      "usage": {
+        "input_tokens": 7723,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 38
+      }
+    },
+    {
+      "case": "引用收尾不算用户收尾",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "主线仍是分析 Codex 的 Luna 调用机制",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线仍是分析 Codex 的 Luna 调用机制",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.36,
+      "usage": {
+        "input_tokens": 7709,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "不完整收尾证据",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "完成证据不完整，保持 active",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "完成上下文不完整，暂保持进行中",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.69,
+      "usage": {
+        "input_tokens": 7697,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 28
+      }
+    },
+    {
+      "case": "完成后仅确认保持完成",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "主线未变，用户仅表示感谢",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，用户仅表示感谢",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 2.64,
+      "usage": {
+        "input_tokens": 7687,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "完成后继续重新激活",
+      "action": "keep",
+      "title": "[分析] Codex｜Luna 后台调用",
+      "reason": "用户明确继续工作",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[分析] Codex｜Luna 后台调用",
+        "reason": "主线未变，普通确认不改变完成状态",
+        "status": "completed"
+      },
+      "model_errors": [
+        "完成状态不符"
+      ],
+      "seconds": 5.05,
+      "usage": {
+        "input_tokens": 7689,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "完成后同主线新实质任务",
+      "action": "keep",
+      "title": "[设计] 存档管理｜删除交互",
+      "reason": "仍是存档删除交互主线，继续实现与补测",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 存档管理｜删除交互",
+        "reason": "仍是存档删除交互主线，继续实现与补测",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.47,
+      "usage": {
+        "input_tokens": 7697,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 68
+      }
+    },
+    {
+      "case": "完成后长期转向",
+      "action": "rename",
+      "title": "[调研] 支付供应商｜费用与集成现状",
+      "reason": "主线已转为调研支付供应商",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[调研] 支付供应商｜费用与集成现状",
+        "reason": "主线已转为调研支付供应商",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.89,
+      "usage": {
+        "input_tokens": 7731,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 115,
+        "reasoning_output_tokens": 63
+      }
+    },
+    {
+      "case": "英文单轮需求",
+      "passed": false,
+      "errors": [
+        "标题长度或空白无效；需预留日期与完成标记"
+      ],
+      "candidate": {
+        "action": "rename",
+        "title": "[排障] Email verification codes｜Fix expiry",
+        "reason": "明确是修复注册验证码过期问题",
+        "status": "active"
+      },
+      "usage": {
+        "input_tokens": 7674,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 44,
+        "reasoning_output_tokens": 0
+      },
+      "seconds": 2.83
+    },
+    {
+      "case": "中文旧标题迁移英文",
+      "action": "rename",
+      "title": "[排障] Email verification｜Fix expiry",
+      "reason": "近期需求持续为英文，主线仍是验证码过期修复",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] Email verification｜Fix expiry",
+        "reason": "近期需求持续为英文，主线仍是验证码过期修复",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 8.19,
+      "usage": {
+        "input_tokens": 7744,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 54
+      }
+    },
+    {
+      "case": "英文旧标题迁移中文",
+      "action": "keep",
+      "title": "[排障] 邮箱验证码｜过期修复",
+      "reason": "持续修复同一过期问题",
+      "status": "active",
+      "passed": false,
+      "errors": [
+        "动作不符"
+      ],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱验证码｜过期修复",
+        "reason": "持续修复同一过期问题",
+        "status": "active"
+      },
+      "model_errors": [
+        "动作不符"
+      ],
+      "seconds": 7.06,
+      "usage": {
+        "input_tokens": 7749,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "英文请求中文助手",
+      "passed": false,
+      "errors": [
+        "标题长度或空白无效；需预留日期与完成标记"
+      ],
+      "candidate": {
+        "action": "rename",
+        "title": "[排障] Stripe webhooks｜Fix duplicate deliveries",
+        "reason": "原标题泛化，明确目标是修复重复投递",
+        "status": "active"
+      },
+      "usage": {
+        "input_tokens": 7814,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 50
+      },
+      "seconds": 3.62
+    },
+    {
+      "case": "英文请求长中文引用",
+      "action": "rename",
+      "title": "[排障] Stripe webhooks｜Fix retries",
+      "reason": "原标题无关，用户明确要求修复重试问题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] Stripe webhooks｜Fix retries",
+        "reason": "原标题无关，用户明确要求修复重试问题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.25,
+      "usage": {
+        "input_tokens": 8775,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 42
+      }
+    },
+    {
+      "case": "中文请求英文代码日志",
+      "action": "rename",
+      "title": "[排障] React 登录表单｜验证问题",
+      "reason": "原标题泛泛且用户明确提出验证故障",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] React 登录表单｜验证问题",
+        "reason": "原标题泛泛且用户明确提出验证故障",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.24,
+      "usage": {
+        "input_tokens": 8183,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "英文用户翻译中文资料",
+      "action": "rename",
+      "title": "[创作] Setup guide｜English translation",
+      "reason": "原标题泛泛，当前目标是英文翻译指南",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] Setup guide｜English translation",
+        "reason": "原标题泛泛，当前目标是英文翻译指南",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.72,
+      "usage": {
+        "input_tokens": 7704,
+        "cached_input_tokens": 5888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 95,
+        "reasoning_output_tokens": 48
+      }
+    },
+    {
+      "case": "日文单轮需求",
+      "action": "rename",
+      "title": "[优化] ログイン画面｜余白と入力欄の配置改善",
+      "reason": "原标题无具体主线，用户明确要求改善登录画面",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[优化] ログイン画面｜余白と入力欄の配置改善",
+        "reason": "原标题无具体主线，用户明确要求改善登录画面",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.8,
+      "usage": {
+        "input_tokens": 7691,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 62
+      }
+    },
+    {
+      "case": "西班牙文单轮需求",
+      "action": "rename",
+      "title": "[排障] Código email｜Corregir caducidad",
+      "reason": "原标题泛泛，用户明确要修复验证码过期错误",
+      "status": "active",
+      "passed": false,
+      "errors": [
+        "缺少对象：verificaci"
+      ],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] Código email｜Corregir caducidad",
+        "reason": "原标题泛泛，用户明确要修复验证码过期错误",
+        "status": "active"
+      },
+      "model_errors": [
+        "缺少对象：verificaci"
+      ],
+      "seconds": 4.19,
+      "usage": {
+        "input_tokens": 7690,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 74
+      }
+    },
+    {
+      "case": "中文偶尔英文不切换",
+      "action": "keep",
+      "title": "[排障] 邮箱验证码｜过期修复",
+      "reason": "主线仍是修复邮箱验证码过期问题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱验证码｜过期修复",
+        "reason": "主线仍是修复邮箱验证码过期问题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.77,
+      "usage": {
+        "input_tokens": 7759,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 90,
+        "reasoning_output_tokens": 40
+      }
+    },
+    {
+      "case": "英文偶尔中文不切换",
+      "action": "keep",
+      "title": "[排障] Email verification｜Fix expiry",
+      "reason": "主线仍是修复验证码过期问题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] Email verification｜Fix expiry",
+        "reason": "主线仍是修复验证码过期问题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.08,
+      "usage": {
+        "input_tokens": 7745,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 44,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "英文不被早期中文目标覆盖",
+      "passed": false,
+      "errors": [
+        "标题长度或空白无效；需预留日期与完成标记"
+      ],
+      "candidate": {
+        "action": "rename",
+        "title": "[排障] Email verification codes｜Fix expiry",
+        "reason": "近期用户需求持续使用英文，主线仍是验证码过期修复",
+        "status": "active"
+      },
+      "usage": {
+        "input_tokens": 7738,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 51,
+        "reasoning_output_tokens": 0
+      },
+      "seconds": 2.69
+    },
+    {
+      "case": "中文混合技术名词",
+      "action": "rename",
+      "title": "[排障] clip-helper 字幕面板｜修复空数据崩溃",
+      "reason": "原标题泛化，已明确具体故障与工具",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] clip-helper 字幕面板｜修复空数据崩溃",
+        "reason": "原标题泛化，已明确具体故障与工具",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.5,
+      "usage": {
+        "input_tokens": 7704,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 55,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "英文语言均衡保持",
+      "action": "keep",
+      "title": "[排障] Email verification｜Fix expiry",
+      "reason": "仍是邮箱验证码过期修复主线，补充测试不改名",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] Email verification｜Fix expiry",
+        "reason": "仍是邮箱验证码过期修复主线，补充测试不改名",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.25,
+      "usage": {
+        "input_tokens": 7722,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 143,
+        "reasoning_output_tokens": 90
+      }
+    },
+    {
+      "case": "西班牙文单轮需求",
+      "action": "rename",
+      "title": "[排障] Código correo｜Corregir caducidad",
+      "reason": "原标题无关，用户明确要修复验证码过期问题",
+      "status": "active",
+      "passed": false,
+      "errors": [
+        "缺少对象：verificaci"
+      ],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] Código correo｜Corregir caducidad",
+        "reason": "原标题无关，用户明确要修复验证码过期问题",
+        "status": "active"
+      },
+      "model_errors": [
+        "缺少对象：verificaci"
+      ],
+      "seconds": 6.66,
+      "usage": {
+        "input_tokens": 7688,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 268,
+        "reasoning_output_tokens": 215
+      }
+    },
+    {
+      "case": "中文偶尔英文不切换",
+      "action": "keep",
+      "title": "[排障] 邮箱验证码｜过期修复",
+      "reason": "同一过期故障的边界测试补充，主线未变",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱验证码｜过期修复",
+        "reason": "同一过期故障的边界测试补充，主线未变",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.92,
+      "usage": {
+        "input_tokens": 7753,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 40
+      }
+    },
+    {
+      "case": "英文偶尔中文不切换",
+      "action": "keep",
+      "title": "[排障] Email verification｜Fix expiry",
+      "reason": "主线仍是修复验证码过期问题",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] Email verification｜Fix expiry",
+        "reason": "主线仍是修复验证码过期问题",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.75,
+      "usage": {
+        "input_tokens": 7743,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 93,
+        "reasoning_output_tokens": 47
+      }
+    },
+    {
+      "case": "英文语言均衡保持",
+      "action": "keep",
+      "title": "[排障] Email verification｜Fix expiry",
+      "reason": "补充同一邮箱验证码过期问题的边界测试",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] Email verification｜Fix expiry",
+        "reason": "补充同一邮箱验证码过期问题的边界测试",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.3,
+      "usage": {
+        "input_tokens": 7722,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 97
+      }
+    },
+    {
+      "case": "提交不是新目标",
+      "action": "keep",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "仍是邮箱注册故障修复主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "仍是邮箱注册故障修复主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.75,
+      "usage": {
+        "input_tokens": 7749,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "旧标题不迁移主线",
+      "action": "keep",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "仍是邮箱注册故障修复，测试提交属于后续步骤",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "仍是邮箱注册故障修复，测试提交属于后续步骤",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.99,
+      "usage": {
+        "input_tokens": 7681,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "设计进入实现保持主线",
+      "action": "keep",
+      "title": "[设计] 存档管理｜删除交互",
+      "reason": "仍是同一删除交互主线，继续实现与测试",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 存档管理｜删除交互",
+        "reason": "仍是同一删除交互主线，继续实现与测试",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.67,
+      "usage": {
+        "input_tokens": 7702,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 97,
+        "reasoning_output_tokens": 45
+      }
+    },
+    {
+      "case": "实现进入测试保持主线",
+      "action": "keep",
+      "title": "[实现] SteamDB 游戏库｜多页导出",
+      "reason": "仍是同一导出功能，仅补充边界测试",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[实现] SteamDB 游戏库｜多页导出",
+        "reason": "仍是同一导出功能，仅补充边界测试",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.33,
+      "usage": {
+        "input_tokens": 7698,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "临时排错不替换主线",
+      "action": "keep",
+      "title": "[实现] 邮箱注册｜功能实现",
+      "reason": "仍围绕邮箱注册实现，测试修复属于子步骤",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[实现] 邮箱注册｜功能实现",
+        "reason": "仍围绕邮箱注册实现，测试修复属于子步骤",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.34,
+      "usage": {
+        "input_tokens": 7693,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 25
+      }
+    },
+    {
+      "case": "旧emoji完成不主动改canonical主线",
+      "action": "keep",
+      "title": "[排障] 邮箱注册｜修复",
+      "reason": "用户明确整句收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 邮箱注册｜修复",
+        "reason": "用户明确验收通过并要求收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 2.94,
+      "usage": {
+        "input_tokens": 7678,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 44,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "旧emoji无分隔符保持",
+      "action": "keep",
+      "title": "[设计] 登录表单｜设计",
+      "reason": "仍是登录表单设计主线，仅调整细节",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[设计] 登录表单｜设计",
+        "reason": "仍是登录表单设计主线，仅调整细节",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.95,
+      "usage": {
+        "input_tokens": 7681,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "无依据keep为空",
+      "action": "keep",
+      "title": "",
+      "status": "active",
+      "reason": "只有问候或确认，缺少新的命名依据",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "",
+        "status": "active",
+        "reason": "只有问候或确认，缺少新的命名依据"
+      },
+      "model_errors": [],
+      "seconds": 0.0,
+      "usage": {}
+    },
+    {
+      "case": "长期转向允许rename",
+      "action": "rename",
+      "title": "[实现] 支付回调｜签名校验与订单处理",
+      "reason": "用户明确转向支付回调实现",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[实现] 支付回调｜签名校验与订单处理",
+        "reason": "用户明确转向支付回调实现",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.92,
+      "usage": {
+        "input_tokens": 7723,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-实现",
+      "action": "rename",
+      "title": "[实现] SteamDB 游戏库｜多页导出脚本",
+      "reason": "原标题泛泛，主线是实现导出脚本",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[实现] SteamDB 游戏库｜多页导出脚本",
+        "reason": "原标题泛泛，主线是实现导出脚本",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 6.45,
+      "usage": {
+        "input_tokens": 7684,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 51,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-设计",
+      "action": "rename",
+      "title": "[设计] 存档管理｜删除交互方案",
+      "reason": "原标题泛泛，需明确设计主线",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[设计] 存档管理｜删除交互方案",
+        "reason": "原标题泛泛，需明确设计主线",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.77,
+      "usage": {
+        "input_tokens": 7678,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-排障",
+      "action": "rename",
+      "title": "[排障] npm 12｜修复 Node engine 不兼容",
+      "reason": "原标题泛化，需明确 npm 12 的兼容性故障",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[排障] npm 12｜修复 Node engine 不兼容",
+        "reason": "原标题泛化，需明确 npm 12 的兼容性故障",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 5.2,
+      "usage": {
+        "input_tokens": 7692,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 55,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-优化",
+      "action": "rename",
+      "title": "[优化] MiniMax H3 Ref2VA Prompt｜避免背景音乐",
+      "reason": "原标题泛泛，用户要改善可用 Prompt 以避免背景音乐",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[优化] MiniMax H3 Ref2VA Prompt｜避免背景音乐",
+        "reason": "原标题泛泛，用户要改善可用 Prompt 以避免背景音乐",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.48,
+      "usage": {
+        "input_tokens": 7698,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 55,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-配置",
+      "action": "rename",
+      "title": "[配置] Codex｜配置 thinking effort",
+      "reason": "原标题泛化，用户明确要配置 Codex 参数",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[配置] Codex｜配置 thinking effort",
+        "reason": "原标题泛化，用户明确要配置 Codex 参数",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.12,
+      "usage": {
+        "input_tokens": 7672,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 45,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-分析",
+      "action": "rename",
+      "title": "[分析] Codex｜Luna 后台调用机制",
+      "reason": "原标题泛泛，用户明确要求解释机制",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[分析] Codex｜Luna 后台调用机制",
+        "reason": "原标题泛泛，用户明确要求解释机制",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.86,
+      "usage": {
+        "input_tokens": 7690,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-调研",
+      "action": "rename",
+      "title": "[调研] Active Incremental 游戏天赋树｜案例与资料",
+      "reason": "原标题泛泛，明确需求为调研天赋树案例",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[调研] Active Incremental 游戏天赋树｜案例与资料",
+        "reason": "原标题泛泛，明确需求为调研天赋树案例",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.16,
+      "usage": {
+        "input_tokens": 7686,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 49
+      }
+    },
+    {
+      "case": "类别-规划",
+      "action": "rename",
+      "title": "[规划] SFO 到 PVG｜回国旅行安排",
+      "reason": "原标题泛泛，原始目标明确为旅行规划",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[规划] SFO 到 PVG｜回国旅行安排",
+        "reason": "原标题泛泛，原始目标明确为旅行规划",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.34,
+      "usage": {
+        "input_tokens": 7684,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 49,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "类别-创作",
+      "action": "rename",
+      "title": "[创作] AI 电台双主播｜运行协议",
+      "reason": "原标题泛化，需明确创作目标",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "rename",
+        "title": "[创作] AI 电台双主播｜运行协议",
+        "reason": "原标题泛化，需明确创作目标",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.88,
+      "usage": {
+        "input_tokens": 7680,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "program_replay": "真实模型输出已用最终程序保护规则离线重放；不把重放计为新的模型调用。",
+  "prompt_sha256": "e2fa1e673b951b9d8f2631e3476f9636fb24dced81c36c0dc764a9f01029cd00",
+  "policy_sha256": "793d5faaa1d44bfb0aac9f6b79f3edc6fe46cebc363ae3fe08303ce76f882ad0"
+}

@@ -8,7 +8,7 @@ from pathlib import Path
 import statistics
 import time
 from codex_adapter import find_codex, generate_title
-from oil_codex_title import DEFAULTS, validate_candidate
+from oil_codex_title import DEFAULTS, validate_candidate, normalize_decision
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -73,8 +73,12 @@ def main():
             candidate, usage = generate_title(binary, DEFAULTS, case['context'], ROOT)
             # 检查模型实际输出，不让 keep 回填现有 canonical 掩盖错误。
             candidate = validate_candidate(candidate, '')
+            model_candidate = dict(candidate)
+            model_errors = candidate_errors(candidate, case)
+            candidate = normalize_decision(candidate, case['context'])
             errors = candidate_errors(candidate, case)
             return {'case': case['id'], **candidate, 'passed': not errors, 'errors':errors,
+                    'model_candidate': model_candidate, 'model_errors': model_errors,
                     'seconds':round(time.monotonic()-start,2),'usage':usage}
         except Exception as exc:
             return {'case':case['id'],'passed':False,'errors':[str(exc)],
@@ -85,7 +89,7 @@ def main():
               'cases':len(rows),'passed':sum(r['passed'] for r in rows),
               'model_cases':sum(bool(r.get('usage')) for r in rows),
               'median_seconds':round(statistics.median(r['seconds'] for r in rows),2),
-              'notice':'确定性过滤与命名模型的合成案例单次检查，不代表普遍准确率，也不验证桌面显示。',
+              'notice':'passed 检查模型输出经程序确定性保护后的决策；model_candidate/model_errors 单独保留原始模型表现。有限合成案例不代表普遍准确率，也不验证桌面显示。',
               'results':rows}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n', encoding='utf-8')

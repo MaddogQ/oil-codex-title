@@ -263,7 +263,10 @@ def snapshot(thread, config):
                "completion_context_complete": bool(effective) and all(
                    len(m["text"]) <= min(per_message, 1200)
                    for t in selected for m in t["messages"] if m["role"] == "user"
-               ) and all(t.get("itemsView", "full") == "full" for t in turns[-config["recent_turns"]:])}
+               ) and all(t.get("itemsView", "full") == "full" for t in turns[-config["recent_turns"]:])
+               and all(part.get("type") == "text" for t in turns[-config["recent_turns"]:]
+                       for item in t.get("items", []) if item.get("type") == "userMessage"
+                       for part in item.get("content", []))}
     signature = json.dumps({"policy_version": POLICY_VERSION, "project_hint": context["project_hint"],
                            "latest_id": latest_id, "effective": effective[-config["recent_turns"]:]},
                            ensure_ascii=False, sort_keys=True)
@@ -338,6 +341,47 @@ def validate_candidate(candidate, current_title):
     if candidate["action"] == "keep":
         title = canonical_title(current_title) or title
     return {**candidate, "title": title, "reason": candidate["reason"][:300]}
+
+
+def normalize_decision(candidate, context):
+    """仅覆盖可确定的整句意图与纯格式变化，不猜测其他语义。"""
+    candidate = dict(candidate)
+    old = context.get("current_title", "")
+    old_body = canonical_title(old)
+    old_body = old_body.split(" ", 1)[1] if old_body else old
+    new_body = candidate["title"].split(" ", 1)[-1]
+    def words(value):
+        value = re.sub(r"^[\U0001F000-\U0001FAFF\u2600-\u27BF\ufe0f\s]+", "", value)
+        return re.sub(r"[\s｜]", "", value).casefold()
+    existing = context.get("current_canonical_title") or canonical_title(old)
+    if existing:
+        same = candidate["title"] == existing
+    elif "｜" in old_body:
+        same = [words(part) for part in old_body.split("｜")] == [words(part) for part in new_body.split("｜")]
+    else:
+        same = bool(new_body) and words(old_body) == words(new_body)
+    if same:
+        if candidate["action"] == "rename":
+            candidate["reason"] = "仅格式变化，保留主线；状态独立判断"
+        candidate["action"] = "keep"
+    if candidate["action"] == "keep" and context.get("current_canonical_title"):
+        candidate["title"] = context["current_canonical_title"]
+    if not context.get("completion_context_complete", True):
+        candidate.update(status="active", reason="完成证据不完整，保持 active")
+        return candidate
+    turns = context.get("recent_turns", [])
+    users = [m.get("text", "") for m in turns[-1].get("messages", [])
+             if m.get("role") == "user"] if turns else []
+    # 只匹配整段用户文本；引用、否定或随后提出的任务均不匹配。
+    text = re.sub(r"[\s,，。！!.]+", "", "\n".join(users)).casefold()
+    endings = {"可以了谢谢", "这个解决了", "不用继续了", "不用追踪了", "done", "就这样",
+               "问题已经修好了", "确认了可以不用追踪了", "验收通过收尾吧",
+               "验收没问题可以收尾", "这个通过了结束吧", "可以收尾了"}
+    if text in endings:
+        candidate.update(status="completed", reason="用户明确整句收尾")
+    elif text in {"继续", "可以继续", "continue"}:
+        candidate.update(status="active", reason="用户明确继续工作")
+    return candidate
 
 
 def confirmation_only(thread, state, config):
@@ -451,7 +495,8 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
                 candidate, usage = generator(before["context"])
         except ModelSkipped as exc:
             return {"status": exc.status}
-        candidate = validate_candidate(candidate, before["context"]["current_canonical_title"])
+        candidate = normalize_decision(
+            validate_candidate(candidate, before["context"]["current_canonical_title"]), before["context"])
         conflicts = conflicting_titles(root, thread_id, candidate["title"], before["scope_key"])
         if candidate["action"] == "rename" and conflicts:
             try:
@@ -460,13 +505,12 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
                     "naming_feedback": "候选与已记录任务重名。用对话里真实的项目、模块或内容主题区分；无法区分就保留原名，不编造编号。"})
             except ModelSkipped as exc:
                 return {"status": exc.status, "usage": usage}
-            candidate = validate_candidate(candidate, before["context"]["current_canonical_title"])
+            candidate = normalize_decision(
+                validate_candidate(candidate, before["context"]["current_canonical_title"]), before["context"])
             usage = {key: usage.get(key, 0) + retry_usage.get(key, 0)
                      for key in usage.keys() | retry_usage.keys()}
             if candidate["action"] == "rename" and conflicting_titles(root, thread_id, candidate["title"], before["scope_key"]):
                 return {"status": "ambiguous_title", "title": before["title"], "usage": usage}
-        if not before["context"]["completion_context_complete"]:
-            candidate = {**candidate, "status": "active"}
         canonical = candidate["title"]
         desired = before["title"]
         # 已采用新展示格式时也按本次判断重组，兼容 completion 字段缺失的 state。
