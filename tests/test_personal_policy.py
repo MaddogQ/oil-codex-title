@@ -263,6 +263,16 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(self.state()['created_date'], title.created_date(self.backend.thread))
         self.assertEqual(self.process(lambda _: self.fail())['status'], 'unchanged')
 
+    def test_legacy_keep_preserves_established_canonical_on_completion(self):
+        self.backend.thread['name'] = '🔎 Codex｜Luna 后台调用'
+        self.process(lambda _: candidate())
+        self.append('验收通过，收尾吧')
+        model = Mock(return_value=candidate('completed', text='[分析] Codex｜测试'))
+        result = self.process(model)
+        self.assertEqual(model.call_args.args[0]['current_canonical_title'], CANONICAL)
+        self.assertEqual(result['canonical_title'], CANONICAL)
+        self.assertEqual(result['title'], '✓ ' + title.created_date(self.backend.thread) + ' ' + CANONICAL)
+
     def test_missing_completion_state_still_removes_completed_marker(self):
         self.process()
         self.append('验收通过，收尾吧')

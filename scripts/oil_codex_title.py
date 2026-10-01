@@ -440,6 +440,9 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             return {"status": "metadata_changed", "title": before["title"]}
         completion = state.get("completion_status", "active")
         before["context"]["completion_status"] = completion
+        before["context"]["current_canonical_title"] = (
+            canonical_title(before["title"]) or state.get("canonical_title", "")
+        )
         skipped = confirmation_only(thread, state, config)
         try:
             ensure_title_active(backend, thread_id, root)
@@ -449,7 +452,7 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
                 candidate, usage = generator(before["context"])
         except ModelSkipped as exc:
             return {"status": exc.status}
-        candidate = validate_candidate(candidate, before["title"])
+        candidate = validate_candidate(candidate, before["context"]["current_canonical_title"])
         conflicts = conflicting_titles(root, thread_id, candidate["title"], before["scope_key"])
         if candidate["action"] == "rename" and conflicts:
             try:
@@ -458,7 +461,7 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
                     "naming_feedback": "候选与已记录任务重名。用对话里真实的项目、模块或内容主题区分；无法区分就保留原名，不编造编号。"})
             except ModelSkipped as exc:
                 return {"status": exc.status, "usage": usage}
-            candidate = validate_candidate(candidate, before["title"])
+            candidate = validate_candidate(candidate, before["context"]["current_canonical_title"])
             usage = {key: usage.get(key, 0) + retry_usage.get(key, 0)
                      for key in usage.keys() | retry_usage.keys()}
             if candidate["action"] == "rename" and conflicting_titles(root, thread_id, candidate["title"], before["scope_key"]):
