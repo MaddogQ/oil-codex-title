@@ -15,7 +15,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -24,8 +27,9 @@
         "caduc"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "[áéíóúñ]"
+      "title_pattern": "[áéíóúñ]",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -62,7 +66,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -71,8 +78,9 @@
         "过期"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "exact_title": "🧩 邮箱验证码｜过期修复"
+      "exact_title": "[排障] 邮箱验证码｜过期修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -109,7 +117,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -118,9 +129,10 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
       "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
-      "exact_title": "🧩 Email verification｜Fix expiry"
+      "exact_title": "[排障] Email verification｜Fix expiry",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -148,7 +160,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -157,9 +172,10 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
       "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
-      "exact_title": "🧩 Email verification｜Fix expiry"
+      "exact_title": "[排障] Email verification｜Fix expiry",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -196,7 +212,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -205,11 +224,13 @@
         "推送",
         "Maple"
       ],
-      "exact_title": "🧩 邮箱注册｜修复"
+      "exact_title": "[排障] 邮箱注册｜修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
-    "id": "旧标题迁移保留主线",
+    "id": "旧标题不迁移主线",
     "context": {
       "current_title": "🛠️ 邮箱注册修复",
       "project_hint": "",
@@ -224,13 +245,18 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
+      "action": "keep",
       "contains": [],
       "reject": [],
-      "exact_title": "🧩 邮箱注册｜修复"
+      "exact_title": "[排障] 邮箱注册｜修复",
+      "status": "active",
+      "category": "排障"
     }
   }
 ]

@@ -15,7 +15,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -24,8 +27,9 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -62,7 +66,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -71,8 +78,9 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -109,7 +117,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -118,8 +129,9 @@
         "过期"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "[\\u3400-\\u9fff]"
+      "title_pattern": "[\\u3400-\\u9fff]",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -142,7 +154,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -150,8 +165,9 @@
         "Stripe"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -170,7 +186,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -178,8 +197,9 @@
         "Stripe"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -198,7 +218,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -207,8 +230,9 @@
         "登录"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "[\\u3400-\\u9fff]"
+      "title_pattern": "[\\u3400-\\u9fff]",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -227,7 +251,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -235,8 +262,9 @@
         "guide"
       ],
       "reject": [],
-      "emoji": "📝",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "创作"
     }
   },
   {
@@ -255,7 +283,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -263,8 +294,9 @@
         "ログイン"
       ],
       "reject": [],
-      "emoji": "🎨",
-      "title_pattern": "[\\u3040-\\u30ff]"
+      "title_pattern": "[\\u3040-\\u30ff]",
+      "status": "active",
+      "category": "优化"
     }
   },
   {
@@ -283,7 +315,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -292,8 +327,9 @@
         "caduc"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "[áéíóúñ]"
+      "title_pattern": "[áéíóúñ]",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -330,7 +366,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -339,8 +378,9 @@
         "过期"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "exact_title": "🧩 邮箱验证码｜过期修复"
+      "exact_title": "[排障] 邮箱验证码｜过期修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -377,7 +417,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -386,9 +429,10 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
       "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
-      "exact_title": "🧩 Email verification｜Fix expiry"
+      "exact_title": "[排障] Email verification｜Fix expiry",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -425,7 +469,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -434,8 +481,9 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$"
+      "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -454,7 +502,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -462,8 +513,9 @@
         "clip-helper"
       ],
       "reject": [],
-      "emoji": "🧩",
-      "title_pattern": "[\\u3400-\\u9fff]"
+      "title_pattern": "[\\u3400-\\u9fff]",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -491,7 +543,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -500,9 +555,10 @@
         "expir"
       ],
       "reject": [],
-      "emoji": "🧩",
       "title_pattern": "^(?!.*[\\u3400-\\u9fff])[^｜]*[A-Za-z][^｜]*｜[A-Za-z][\\x20-\\x7e]*$",
-      "exact_title": "🧩 Email verification｜Fix expiry"
+      "exact_title": "[排障] Email verification｜Fix expiry",
+      "status": "active",
+      "category": "排障"
     }
   }
 ]

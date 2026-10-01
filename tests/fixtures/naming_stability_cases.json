@@ -1,0 +1,500 @@
+[
+  {
+    "id": "设计进入实现保持主线",
+    "context": {
+      "current_title": "[设计] 存档管理｜删除交互",
+      "current_canonical_title": "[设计] 存档管理｜删除交互",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计存档管理的删除交互",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "这个删除交互设计可以，继续实现并补上测试"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "设计",
+      "exact_title": "[设计] 存档管理｜删除交互"
+    }
+  },
+  {
+    "id": "实现进入测试保持主线",
+    "context": {
+      "current_title": "[实现] SteamDB 游戏库｜多页导出",
+      "current_canonical_title": "[实现] SteamDB 游戏库｜多页导出",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "实现 SteamDB 游戏库多页导出",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "现在补分页导出的边界测试，然后提交"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "实现",
+      "exact_title": "[实现] SteamDB 游戏库｜多页导出"
+    }
+  },
+  {
+    "id": "临时排错不替换主线",
+    "context": {
+      "current_title": "[实现] 邮箱注册｜功能实现",
+      "current_canonical_title": "[实现] 邮箱注册｜功能实现",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "实现邮箱注册",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "实现过程中测试失败了，请修复这个测试然后继续邮箱注册实现"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "实现",
+      "exact_title": "[实现] 邮箱注册｜功能实现"
+    }
+  },
+  {
+    "id": "旧emoji完成不主动改canonical主线",
+    "context": {
+      "current_title": "🛠️ 邮箱注册修复",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "修复邮箱注册",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "验收通过，收尾吧"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "排障",
+      "exact_title": "[排障] 邮箱注册｜修复"
+    }
+  },
+  {
+    "id": "旧emoji无分隔符保持",
+    "context": {
+      "current_title": "🎨 登录表单设计",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计登录表单",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "继续调整登录表单间距和提示文案"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "设计",
+      "exact_title": "[设计] 登录表单｜设计"
+    }
+  },
+  {
+    "id": "无依据keep为空",
+    "context": {
+      "current_title": "回应中文问候",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "你好",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "你好"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "exact_title": ""
+    }
+  },
+  {
+    "id": "长期转向允许rename",
+    "context": {
+      "current_title": "[设计] 存档管理｜删除交互",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计存档管理删除交互",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "存档交互先放下，现在主任务改为实现支付回调"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "user",
+              "text": "继续实现支付回调的签名校验和订单处理"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "支付"
+      ],
+      "reject": [],
+      "category": "实现"
+    }
+  },
+  {
+    "id": "类别-实现",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "从头实现 SteamDB 游戏库多页导出脚本",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "从头实现 SteamDB 游戏库多页导出脚本"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "SteamDB 游戏库"
+      ],
+      "reject": [],
+      "category": "实现"
+    }
+  },
+  {
+    "id": "类别-设计",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计存档管理的删除交互方案",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "设计存档管理的删除交互方案"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "存档管理"
+      ],
+      "reject": [],
+      "category": "设计"
+    }
+  },
+  {
+    "id": "类别-排障",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "npm 12 提示 Node engine 不兼容，请定位并修复",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "npm 12 提示 Node engine 不兼容，请定位并修复"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "npm 12"
+      ],
+      "reject": [],
+      "category": "排障"
+    }
+  },
+  {
+    "id": "类别-优化",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "MiniMax H3 Ref2VA 的 Prompt 已可用，请改善它以避免背景音乐",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "MiniMax H3 Ref2VA 的 Prompt 已可用，请改善它以避免背景音乐"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "MiniMax H3 Ref2VA"
+      ],
+      "reject": [],
+      "category": "优化"
+    }
+  },
+  {
+    "id": "类别-配置",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "配置 Codex 的 thinking effort 参数",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "配置 Codex 的 thinking effort 参数"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "Codex"
+      ],
+      "reject": [],
+      "category": "配置"
+    }
+  },
+  {
+    "id": "类别-分析",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "解释 Codex 的 Luna 后台调用机制，依据已给的代码",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "解释 Codex 的 Luna 后台调用机制，依据已给的代码"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "Codex"
+      ],
+      "reject": [],
+      "category": "分析"
+    }
+  },
+  {
+    "id": "类别-调研",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "搜索 Active Incremental 游戏天赋树的案例与资料",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "搜索 Active Incremental 游戏天赋树的案例与资料"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "Active Incremental"
+      ],
+      "reject": [],
+      "category": "调研"
+    }
+  },
+  {
+    "id": "类别-规划",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "安排从 SFO 到 PVG 的回国旅行计划",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "安排从 SFO 到 PVG 的回国旅行计划"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "SFO → PVG"
+      ],
+      "reject": [],
+      "category": "规划"
+    }
+  },
+  {
+    "id": "类别-创作",
+    "context": {
+      "current_title": "讨论事情",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "创作 AI 电台的双主播运行协议文本",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "创作 AI 电台的双主播运行协议文本"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "AI 电台"
+      ],
+      "reject": [],
+      "category": "创作"
+    }
+  }
+]
