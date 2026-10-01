@@ -90,9 +90,9 @@ class PlatformTests(unittest.TestCase):
             self.assertEqual(find_codex(), exe)
 
     def test_windows_paths_cannot_leak_into_titles(self):
-        for name in (r'🧩 C:\Users\example\app｜修复', r'🧩 \\server\private｜修复', '🧩 C:/Users/example/app｜修复'):
+        for name in (r'[排障] C:\Users\example\app｜修复', r'[排障] \\server\private｜修复', '[排障] C:/Users/example/app｜修复'):
             with self.subTest(name=name), self.assertRaises(ValueError):
-                app.validate_candidate({'action':'rename','title':name,'reason':''}, '')
+                app.validate_candidate({'action':'rename', "status": "active",'title':name,'reason':''}, '')
 
     def test_utf8_status_roundtrip_with_legacy_io_encoding(self):
         app.atomic_json(self.root / 'config.json', {'label':'中文 🧩｜标题'})
@@ -103,7 +103,7 @@ class PlatformTests(unittest.TestCase):
         self.assertEqual(json.loads(p.stdout.decode('utf-8'))['config']['label'],'中文 🧩｜标题')
 
     def test_model_process_launch_accepts_windows_flags_and_unicode_json(self):
-        expected = {"action":"rename","title":"🧩 中文工具｜修复","reason":"目标明确"}
+        expected = {"action":"rename", "status": "active","title":"[排障] 中文工具｜修复","reason":"目标明确"}
         def fake_run(args, **kwargs):
             self.assertEqual(kwargs["creationflags"], 0)
             self.assertEqual(kwargs["encoding"], "utf-8")

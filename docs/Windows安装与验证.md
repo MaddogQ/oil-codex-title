@@ -72,7 +72,7 @@ codex plugin marketplace add D:\01_WORKS
 codex plugin marketplace list
 ```
 
-`source.path` 相对市场根目录解析，不能相对 `.agents/plugins` 目录解析。仅注册市场还没有安装插件。在 Codex Desktop 插件目录选择该本地市场，安装并启用完整的 `oil-codex-title` 插件，再重启 App。
+`source.path` 相对市场根目录解析，不能相对 `.agents/plugins` 目录解析。若已安装上游同名插件，先在插件目录禁用上游版本，避免两个 Stop Hook 同时处理标题。仅注册市场还没有安装插件。在 Codex Desktop 插件目录选择该本地市场，安装并启用完整的 `oil-codex-title` 插件，再重启 App。
 
 此仓库本身没有市场 catalog，不能把 `codex plugin marketplace add MaddogQ/oil-codex-title` 当作完整安装。这里使用本地 catalog 指向指定分支的 clone。[OpenAI 官方插件文档](https://developers.openai.com/plugins/build/plugins)说明本地市场注册、相对路径和桌面安装流程。
 

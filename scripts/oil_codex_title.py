@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import contextmanager
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -31,8 +32,9 @@ DEFAULTS = {
     "model_timeout_seconds": 100,
     "max_parallel_workers": 2,
 }
-EMOJI = ("🎬", "🧩", "🔎", "📝", "📅", "🎨", "⚙️", "💬")
-POLICY_VERSION = 8
+CATEGORIES = ("实现", "设计", "排障", "优化", "配置", "分析", "调研", "规划", "创作")
+POLICY_VERSION = 9
+MAX_TITLE_LENGTH = 48
 
 
 def data_dir():
@@ -212,7 +214,7 @@ def conflicting_titles(root, thread_id, candidate, scope_key=""):
             continue
         if state.get("scope_key", "") != scope_key:
             continue
-        other = state.get("last_seen_title")
+        other = state.get("canonical_title") or canonical_title(state.get("last_seen_title", ""))
         if other == candidate:
             conflicts.add(other)
     return sorted(conflicts)
@@ -257,7 +259,12 @@ def snapshot(thread, config):
         original = next(m["text"] for m in effective[0]["messages"] if m["role"] == "user")[:800]
     latest_id = turns[-1]["id"] if turns else None
     context = {"current_title": title, "project_hint": project_hint(thread),
-               "original_goal": original, "recent_turns": recent}
+               "original_goal": original, "recent_turns": recent,
+               "current_canonical_title": canonical_title(title),
+               "completion_context_complete": bool(effective) and all(
+                   len(m["text"]) <= min(per_message, 1200)
+                   for t in selected for m in t["messages"] if m["role"] == "user"
+               ) and all(t.get("itemsView", "full") == "full" for t in turns[-config["recent_turns"]:])}
     signature = json.dumps({"policy_version": POLICY_VERSION, "project_hint": context["project_hint"],
                            "latest_id": latest_id, "effective": effective[-config["recent_turns"]:]},
                            ensure_ascii=False, sort_keys=True)
@@ -267,45 +274,82 @@ def snapshot(thread, config):
             "context": context, "has_messages": bool(effective), "scope_key": scope_key}
 
 
+def created_date(thread):
+    """只用真实 createdAt；官方 Unix 秒或带时区 ISO 时间转本机当地日期。"""
+    value = thread.get("createdAt")
+    try:
+        if type(value) in (int, float):
+            stamp = datetime.fromtimestamp(value, timezone.utc)
+        elif isinstance(value, str):
+            stamp = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if stamp.tzinfo is None or stamp.utcoffset() is None:
+                raise ValueError("createdAt 缺少时区")
+        else:
+            raise ValueError("createdAt 缺失")
+        return stamp.astimezone().strftime("%y%m%d")
+    except (ValueError, OverflowError, OSError) as exc:
+        raise ValueError("metadata unavailable: createdAt 无效或缺失") from exc
+
+
+def canonical_title(display):
+    """仅拆已知展示格式，不从标题推断日期或完成状态。"""
+    value = re.sub(r"^(?:✓ )?[0-9]{6} ", "", display)
+    return value if re.match(r"^\[(?:" + "|".join(CATEGORIES) + r")\] ", value) else ""
+
+
+def display_title(canonical, date, status):
+    if status not in ("active", "completed") or not re.fullmatch(r"[0-9]{6}", date):
+        raise ValueError("标题元数据无效")
+    validate_candidate({"action": "rename", "title": canonical, "status": status, "reason": ""}, "")
+    result = ("✓ " if status == "completed" else "") + date + " " + canonical
+    if len(result) > MAX_TITLE_LENGTH:
+        raise ValueError("展示标题过长")
+    return result
+
+
 def validate_candidate(candidate, current_title):
-    if not isinstance(candidate, dict) or set(candidate) != {"action", "title", "reason"}:
+    if not isinstance(candidate, dict) or set(candidate) != {"action", "title", "status", "reason"}:
         raise ValueError("模型输出字段无效")
-    if candidate["action"] not in ("rename", "keep") or not all(
+    if candidate["action"] not in ("rename", "keep") or candidate["status"] not in ("active", "completed") or not all(
         isinstance(candidate[k], str) for k in ("title", "reason")
     ):
         raise ValueError("模型输出类型无效")
-    if candidate["action"] == "keep":
-        candidate = {**candidate, "title": current_title}
-    else:
-        title = candidate["title"]
-        if title != title.strip() or not 4 <= len(title) <= 48:
-            raise ValueError("标题长度或空白无效")
-        if not any(title.startswith(e + " ") for e in EMOJI):
-            raise ValueError("标题缺少允许的类别 emoji")
+    title = candidate["title"]
+    # 无命名依据的 keep 可为空；不能把旧格式原名伪装成 canonical title。
+    if title or candidate["action"] == "rename":
+        if title != title.strip() or not 4 <= len(title) <= MAX_TITLE_LENGTH - 9:
+            raise ValueError("标题长度或空白无效；需预留日期与完成标记")
+        if not re.match(r"^\[(?:" + "|".join(CATEGORIES) + r")\] ", title):
+            raise ValueError("标题缺少允许的类别")
         body = title.split(" ", 1)[1]
         if body.count("｜") != 1 or "|" in body:
             raise ValueError("标题必须采用对象｜目标结构")
         if any(not part or part != part.strip() for part in body.split("｜")):
             raise ValueError("标题对象与目标不能为空或带边缘空格")
-        if (not body.strip() or any(e in body for e in EMOJI)
-                or any(0x1F000 <= ord(c) <= 0x1FAFF or 0x2600 <= ord(c) <= 0x27BF for c in body)):
-            raise ValueError("标题正文无效或包含多个类别 emoji")
+        if "✓" in title or any(0x1F000 <= ord(c) <= 0x1FAFF or 0x2600 <= ord(c) <= 0x27BF for c in body):
+            raise ValueError("canonical title 不允许完成标记或 emoji")
+        if re.search(r"(?<![0-9])[0-9]{6}(?![0-9])|[0-9]{4}[-/年][0-9]{1,2}[-/月][0-9]{1,2}|[0-9]{1,2}\s*月\s*[0-9]{1,2}\s*日", title):
+            raise ValueError("canonical title 不允许日期")
         if any(unicodedata.category(c).startswith("C") for c in title):
             raise ValueError("标题含控制字符")
-        if re.search(r"[A-Za-z]:[\\/]|\\\\", title):
-            raise ValueError("标题含 Windows 绝对路径")
+        if re.search(r"[A-Za-z]:[\\/]|\\\\|(?:^|\s)/[\w.]", title):
+            raise ValueError("标题含绝对路径")
         if any(x in title for x in ("\n", "\r", "`", "https://", "http://", "@", "/Users/", "sk-")):
             raise ValueError("标题含不允许的格式或私人信息")
-    return {**candidate, "reason": candidate["reason"][:300]}
+    if candidate["action"] == "keep":
+        title = canonical_title(current_title) or title
+    return {**candidate, "title": title, "reason": candidate["reason"][:300]}
 
 
 def confirmation_only(thread, state, config):
     """仅在基线仍一致时跳过最多两轮纯确认；附件、遗漏轮次或规则升级均重新判断。"""
     if state.get("policy_version") != POLICY_VERSION or not state.get("last_fingerprint"):
         return 0
-    current = thread.get("name") or ""
+    current = canonical_title(thread.get("name") or "")
+    if state.get("completion_status", "active") != "active":
+        return 0
     try:
-        validate_candidate({"action": "rename", "title": current, "reason": ""}, current)
+        validate_candidate({"action": "rename", "title": current, "status": "active", "reason": ""}, current)
     except ValueError:
         return 0
     turns = thread.get("turns", [])
@@ -317,7 +361,7 @@ def confirmation_only(thread, state, config):
         return 0
     if snapshot({**thread, "turns": turns[:index + 1]}, config)["fingerprint"] != state["last_fingerprint"]:
         return 0
-    allowed = {"好", "好的", "可以", "收到", "谢谢", "继续", "ok", "okay", "thanks", "thank you", "continue"}
+    allowed = {"好", "好的", "可以", "收到", "继续", "ok", "okay", "continue", "可以，继续"}
     for turn in pending:
         if turn.get("status") != "completed" or turn.get("itemsView", "full") != "full":
             return 0
@@ -367,6 +411,7 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
         if state.get("pending_title") == before["title"]:
             state.update(last_seen_title=before["title"], last_generated_title=before["title"])
             state.pop("pending_title", None)
+            state.update(state.pop("pending_metadata", {}))
             if apply:
                 atomic_json(path, state)
         # 初次观察到的标题可能仍是宿主的临时标题。只有成功评估/写入后，
@@ -387,11 +432,19 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             return {"status": "manual_title", "title": before["title"]}
         if state.get("last_fingerprint") == before["fingerprint"]:
             return {"status": "unchanged", "title": before["title"]}
+        try:
+            date = created_date(thread)
+        except ValueError:
+            return {"status": "metadata_unavailable", "title": before["title"]}
+        if state.get("created_date", date) != date:
+            return {"status": "metadata_changed", "title": before["title"]}
+        completion = state.get("completion_status", "active")
+        before["context"]["completion_status"] = completion
         skipped = confirmation_only(thread, state, config)
         try:
             ensure_title_active(backend, thread_id, root)
             if skipped:
-                candidate, usage = {"action": "keep", "title": before["title"], "reason": "新增内容仅为确认，保留稳定标题"}, {}
+                candidate, usage = {"action": "keep", "title": canonical_title(before["title"]), "status": "active", "reason": "新增内容仅为确认，保留稳定标题"}, {}
             else:
                 candidate, usage = generator(before["context"])
         except ModelSkipped as exc:
@@ -410,7 +463,18 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
                      for key in usage.keys() | retry_usage.keys()}
             if candidate["action"] == "rename" and conflicting_titles(root, thread_id, candidate["title"], before["scope_key"]):
                 return {"status": "ambiguous_title", "title": before["title"], "usage": usage}
-        result = {"status": "preview", **candidate, "usage": usage}
+        if not before["context"]["completion_context_complete"]:
+            candidate = {**candidate, "status": "active"}
+        canonical = candidate["title"]
+        desired = before["title"]
+        if candidate["action"] == "rename" or candidate["status"] != completion:
+            if not canonical:
+                return {"status": "insufficient_title", "title": before["title"], "usage": usage}
+            desired = display_title(canonical, date, candidate["status"])
+        metadata = {"canonical_title": canonical, "created_date": date,
+                    "completion_status": candidate["status"], "display_title": desired}
+        result = {"status": "preview", "action": candidate["action"], "title": desired,
+                  **metadata, "reason": candidate["reason"], "usage": usage}
         if skipped:
             result["skip_reason"] = "confirmation_only"
         if not apply:
@@ -424,31 +488,41 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             return {"status": "locked"}
         if backend.is_archived(thread_id):
             return {"status": "archived"}
-        after = snapshot(backend.read(thread_id), config)
+        fresh_thread = backend.read(thread_id)
+        try:
+            if created_date(fresh_thread) != date:
+                return {"status": "stale_result"}
+        except ValueError:
+            return {"status": "metadata_unavailable", "title": before["title"]}
+        after = snapshot(fresh_thread, config)
         if after["title"] != before["title"] or after["fingerprint"] != before["fingerprint"]:
             return {"status": "stale_result"}
         state.update(last_seen_title=before["title"], last_turn_id=before["latest_id"],
                      scope_key=before["scope_key"], updated_at=int(time.time()),
                      policy_version=POLICY_VERSION,
                      confirmation_skips=state.get("confirmation_skips", 0) + skipped if skipped else 0)
-        if candidate["action"] == "rename" and candidate["title"] != before["title"]:
-            state["pending_title"] = candidate["title"]
+        if desired != before["title"]:
+            state["pending_title"] = desired
+            state["pending_metadata"] = metadata
             atomic_json(path, state)
             try:
-                backend.rename(thread_id, candidate["title"])
+                backend.rename(thread_id, desired)
             except BackendError:
                 # 网络/进程错误可能发生在写入成功后，先读回确认，不盲目重试。
-                if snapshot(backend.read(thread_id), config)["title"] != candidate["title"]:
+                if snapshot(backend.read(thread_id), config)["title"] != desired:
                     raise
             verified = snapshot(backend.read(thread_id), config)
-            if verified["title"] != candidate["title"]:
+            if verified["title"] != desired:
                 raise BackendError("标题写入后核验不一致")
-            state.update(last_seen_title=candidate["title"], last_generated_title=candidate["title"])
-            state.pop("pending_title", None)
+            state.update(last_seen_title=desired, last_generated_title=desired)
             result["status"] = "renamed"
             result["verification"] = "metadata_only"
         else:
             result["status"] = "kept"
+        # 后续成功的 keep 也使旧失败写入失效，不能日后误认成已确认写入。
+        state.pop("pending_title", None)
+        state.pop("pending_metadata", None)
+        state.update(metadata)
         state["last_fingerprint"] = before["fingerprint"]
         atomic_json(path, state)
         audit(root, thread_id, result)
@@ -564,6 +638,7 @@ def main():
                                      last_seen_title=backend.read(thread_id).get("name") or "")
                         state.pop("last_fingerprint", None)
                         state.pop("pending_title", None)
+                        state.pop("pending_metadata", None)
                         atomic_json(path, state)
                         result = {"status": args.command, "title": state["last_seen_title"]}
                 else:
