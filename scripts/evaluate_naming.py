@@ -54,7 +54,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live', action='store_true', help='允许实际调用已配置的命名模型')
     parser.add_argument('--self-check', action='store_true', help='离线检查评估器断言，不调用模型')
-    parser.add_argument('--output', type=Path, default=ROOT / 'docs/naming-evaluation.json')
+    parser.add_argument('--output', type=Path, default=ROOT / 'docs/naming-personal-evaluation.json')
     parser.add_argument('--cases', type=Path, default=ROOT / 'tests/fixtures/naming_cases.json', help='合成案例文件，可单独评测语言等规则')
     parser.add_argument('--workers', type=int, default=4, choices=range(1,9))
     args = parser.parse_args()

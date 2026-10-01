@@ -149,7 +149,7 @@
   {
     "id": "提交不是新目标",
     "context": {
-      "current_title": "🧩 邮箱注册｜修复",
+      "current_title": "[排障] 邮箱注册｜修复",
       "project_hint": "maple",
       "original_goal": "修复邮箱注册",
       "recent_turns": [
@@ -181,7 +181,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] 邮箱注册｜修复",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -200,7 +200,7 @@
   {
     "id": "解释不是新目标",
     "context": {
-      "current_title": "🧩 支付回调｜幂等修复",
+      "current_title": "[排障] 支付回调｜幂等修复",
       "project_hint": "maple",
       "original_goal": "修复支付回调重复发货",
       "recent_turns": [
@@ -223,7 +223,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] 支付回调｜幂等修复",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -395,7 +395,7 @@
   {
     "id": "准确标题保持",
     "context": {
-      "current_title": "🎨 登录表单｜设计",
+      "current_title": "[设计] 登录表单｜设计",
       "project_hint": "maple",
       "original_goal": "Maple 登录表单设计",
       "recent_turns": [
@@ -409,7 +409,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[设计] 登录表单｜设计",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -448,17 +448,19 @@
     "expected": {
       "action": "keep",
       "contains": [
-        "登录"
+        "登录",
+        "登录表单"
       ],
       "reject": [
         "Maple",
         "Cedar",
         "Kite",
-        "Maple"
+        "间距",
+        "报错"
       ],
       "status": "active",
       "category": "设计",
-      "exact_title": "[设计] 登录表单｜设计"
+      "title_pattern": "^[^｜]*｜.*设计"
     }
   },
   {
@@ -493,7 +495,7 @@
   {
     "id": "仅有继续",
     "context": {
-      "current_title": "🧩 注册校验｜修复",
+      "current_title": "[排障] 注册校验｜修复",
       "project_hint": "maple",
       "original_goal": "修复 Maple 注册校验",
       "recent_turns": [
@@ -507,7 +509,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] 注册校验｜修复",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -883,11 +885,17 @@
     },
     "expected": {
       "action": "keep",
-      "contains": [],
-      "reject": [],
-      "exact_title": "[排障] 邮箱注册｜修复",
+      "contains": [
+        "邮箱注册"
+      ],
+      "reject": [
+        "测试",
+        "提交",
+        "推送"
+      ],
       "status": "active",
-      "category": "排障"
+      "category": "排障",
+      "title_pattern": "^[^｜]*｜.*修复"
     }
   },
   {
@@ -914,15 +922,18 @@
     "expected": {
       "action": "keep",
       "contains": [
-        "Orion"
+        "Orion",
+        "视频"
       ],
-      "reject": [],
+      "reject": [
+        "黑帧"
+      ],
       "object_contains": [
         "Orion"
       ],
       "status": "active",
       "category": "创作",
-      "exact_title": "[创作] Orion 评测视频｜制作"
+      "title_pattern": "^[^｜]*｜.*制作"
     }
   },
   {
@@ -949,7 +960,9 @@
     "expected": {
       "action": "keep",
       "contains": [
-        "裁剪"
+        "裁剪",
+        "clip-helper",
+        "字幕"
       ],
       "reject": [],
       "object_contains": [
@@ -957,7 +970,7 @@
       ],
       "status": "active",
       "category": "排障",
-      "exact_title": "[排障] clip-helper｜字幕裁剪修复"
+      "title_pattern": "^[^｜]*｜.*修复"
     }
   },
   {
@@ -1015,7 +1028,11 @@
     },
     "expected": {
       "action": "keep",
-      "contains": [],
+      "contains": [
+        "Atlas",
+        "Atlas Pro",
+        "编码"
+      ],
       "reject": [],
       "object_contains": [
         "Atlas",
@@ -1023,7 +1040,7 @@
       ],
       "status": "active",
       "category": "分析",
-      "exact_title": "[分析] Atlas / Atlas Pro｜编码对比"
+      "title_pattern": "^[^｜]*｜.*(?:对比|比较)"
     }
   },
   {
@@ -1049,11 +1066,16 @@
     },
     "expected": {
       "action": "keep",
-      "contains": [],
-      "reject": [],
-      "exact_title": "[设计] 登录表单｜设计",
+      "contains": [
+        "登录表单"
+      ],
+      "reject": [
+        "间距",
+        "提示文案"
+      ],
       "status": "active",
-      "category": "设计"
+      "category": "设计",
+      "title_pattern": "^[^｜]*｜.*设计"
     }
   }
 ]

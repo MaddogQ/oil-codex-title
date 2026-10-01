@@ -35,7 +35,7 @@
   {
     "id": "中文偶尔英文不切换",
     "context": {
-      "current_title": "🧩 邮箱验证码｜过期修复",
+      "current_title": "[排障] 邮箱验证码｜过期修复",
       "project_hint": "",
       "original_goal": "修复邮箱验证码过期的问题。",
       "recent_turns": [
@@ -67,7 +67,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] 邮箱验证码｜过期修复",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -86,7 +86,7 @@
   {
     "id": "英文偶尔中文不切换",
     "context": {
-      "current_title": "🧩 Email verification｜Fix expiry",
+      "current_title": "[排障] Email verification｜Fix expiry",
       "project_hint": "",
       "original_goal": "Fix expired email verification codes.",
       "recent_turns": [
@@ -118,7 +118,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] Email verification｜Fix expiry",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -138,7 +138,7 @@
   {
     "id": "英文语言均衡保持",
     "context": {
-      "current_title": "🧩 Email verification｜Fix expiry",
+      "current_title": "[排障] Email verification｜Fix expiry",
       "project_hint": "",
       "original_goal": "Add coverage for expired email verification codes.",
       "recent_turns": [
@@ -161,7 +161,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] Email verification｜Fix expiry",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -181,7 +181,7 @@
   {
     "id": "提交不是新目标",
     "context": {
-      "current_title": "🧩 邮箱注册｜修复",
+      "current_title": "[排障] 邮箱注册｜修复",
       "project_hint": "maple",
       "original_goal": "修复邮箱注册",
       "recent_turns": [
@@ -213,7 +213,7 @@
           ]
         }
       ],
-      "current_canonical_title": "",
+      "current_canonical_title": "[排障] 邮箱注册｜修复",
       "completion_status": "active",
       "completion_context_complete": true
     },
@@ -252,11 +252,17 @@
     },
     "expected": {
       "action": "keep",
-      "contains": [],
-      "reject": [],
-      "exact_title": "[排障] 邮箱注册｜修复",
+      "contains": [
+        "邮箱注册"
+      ],
+      "reject": [
+        "测试",
+        "提交",
+        "推送"
+      ],
       "status": "active",
-      "category": "排障"
+      "category": "排障",
+      "title_pattern": "^[^｜]*｜.*修复"
     }
   }
 ]

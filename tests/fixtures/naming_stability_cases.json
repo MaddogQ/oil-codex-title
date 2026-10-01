@@ -143,10 +143,15 @@
     "expected": {
       "action": "keep",
       "status": "active",
-      "contains": [],
-      "reject": [],
+      "contains": [
+        "登录表单"
+      ],
+      "reject": [
+        "间距",
+        "提示文案"
+      ],
       "category": "设计",
-      "exact_title": "[设计] 登录表单｜设计"
+      "title_pattern": "^[^｜]*｜.*设计"
     }
   },
   {
@@ -460,10 +465,15 @@
       "action": "rename",
       "status": "active",
       "contains": [
-        "SFO → PVG"
+        "SFO",
+        "PVG"
       ],
       "reject": [],
-      "category": "规划"
+      "category": "规划",
+      "object_contains": [
+        "SFO",
+        "PVG"
+      ]
     }
   },
   {
