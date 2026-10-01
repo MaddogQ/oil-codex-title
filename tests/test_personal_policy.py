@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 import json
 import os
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -106,6 +107,16 @@ class ValidationTests(unittest.TestCase):
         self.assertEqual(len(title.display_title(text, '260904', 'active')), 46)
         with self.assertRaises(ValueError):
             title.display_title(text + 'c', '260904', 'active')
+
+    def test_output_schema_matches_canonical_constraints(self):
+        schema = adapter.SCHEMA['properties']['title']
+        self.assertEqual(schema['maxLength'], title.MAX_TITLE_LENGTH - 9)
+        for category in title.CATEGORIES:
+            self.assertRegex(f'[{category}] 对象｜目标', schema['pattern'])
+        self.assertRegex('', schema['pattern'])
+        for invalid in ('[設計] 対象｜目標', '✓ ' + CANONICAL, '260904 ' + CANONICAL,
+                        '[分析] 对象|目标', '[分析] 对象｜目标｜额外'):
+            self.assertIsNone(re.fullmatch(schema['pattern'], invalid))
 
     def test_missing_or_invalid_completion_field_rejected(self):
         for value in (None, 'done', True, [], {}):

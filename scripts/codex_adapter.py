@@ -194,11 +194,15 @@ class CodexBackend:
                 stream.close()
 
 
+CATEGORIES = ("实现", "设计", "排障", "优化", "配置", "分析", "调研", "规划", "创作")
+
 SCHEMA = {
     "type": "object", "additionalProperties": False,
     "properties": {
         "action": {"type": "string", "enum": ["keep", "rename"]},
-        "title": {"type": "string"}, "reason": {"type": "string"},
+        "title": {"type": "string", "maxLength": 39,
+                  "pattern": r"^(?:\[(?:" + "|".join(CATEGORIES) + r")\] [^｜]+｜[^｜]+)?$"},
+        "reason": {"type": "string"},
         "status": {"type": "string", "enum": ["active", "completed"]},
     },
     "required": ["action", "title", "status", "reason"],

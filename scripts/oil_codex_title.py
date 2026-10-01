@@ -17,7 +17,7 @@ import time
 import unicodedata
 import uuid
 
-from codex_adapter import BackendError, ModelSkipped, CodexBackend, find_codex, generate_title, process_options
+from codex_adapter import CATEGORIES, BackendError, ModelSkipped, CodexBackend, find_codex, generate_title, process_options
 import file_lock
 from usage_ledger import usage_scope, usage_report
 
@@ -32,7 +32,6 @@ DEFAULTS = {
     "model_timeout_seconds": 100,
     "max_parallel_workers": 2,
 }
-CATEGORIES = ("实现", "设计", "排障", "优化", "配置", "分析", "调研", "规划", "创作")
 POLICY_VERSION = 9
 MAX_TITLE_LENGTH = 48
 
