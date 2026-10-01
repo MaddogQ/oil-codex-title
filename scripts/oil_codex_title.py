@@ -467,7 +467,10 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             candidate = {**candidate, "status": "active"}
         canonical = candidate["title"]
         desired = before["title"]
-        if candidate["action"] == "rename" or candidate["status"] != completion:
+        # 已采用新展示格式时也按本次判断重组，兼容 completion 字段缺失的 state。
+        # 这里只识别展示结构；日期仍来自 createdAt，状态仍来自模型。
+        formatted = bool(canonical and re.fullmatch(r"(?:✓ )?[0-9]{6} " + re.escape(canonical), before["title"]))
+        if candidate["action"] == "rename" or candidate["status"] != completion or formatted:
             if not canonical:
                 return {"status": "insufficient_title", "title": before["title"], "usage": usage}
             desired = display_title(canonical, date, candidate["status"])

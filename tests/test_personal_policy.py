@@ -263,6 +263,19 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(self.state()['created_date'], title.created_date(self.backend.thread))
         self.assertEqual(self.process(lambda _: self.fail())['status'], 'unchanged')
 
+    def test_missing_completion_state_still_removes_completed_marker(self):
+        self.process()
+        self.append('验收通过，收尾吧')
+        self.process(lambda _: candidate('completed'))
+        state = self.state()
+        state.pop('completion_status')
+        title.atomic_json(title.state_path(self.root, fixtures.ID), state)
+        self.append('现在增加一个新功能')
+        result = self.process(lambda _: candidate('active'))
+        self.assertEqual(result['status'], 'renamed')
+        self.assertEqual(result['title'], state['created_date'] + ' ' + CANONICAL)
+        self.assertEqual(self.state()['completion_status'], 'active')
+
     def test_legacy_completion_is_state_driven_not_format_cleanup(self):
         self.backend.thread['name'] = '🧩 Codex｜Luna 后台调用'
         self.append('验收通过，收尾吧')
