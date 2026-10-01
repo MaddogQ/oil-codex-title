@@ -77,5 +77,15 @@
 - 若候选与 conflicting_titles 中的 canonical 标题相同，用对话里有依据的区分点。依据不足时 keep，不能编造差别。
 - 不为清理重复项目名或统一旧格式而主动 rename，也不更换对象的同义词。
 
+输出前逐项核对：
+- Body language follows the user's substantive requests. Use Chinese category labels only. 英文需求的对象和目标必须为英文；日文需求必须为日文。reason 和提示词的中文不决定正文语言。
+- 类别只能逐字使用「实现、设计、排障、优化、配置、分析、调研、规划、创作」，不能翻译为「設計」等其他语言。已有可用界面的改善属于优化；已有设计主线内的修改仍属于设计。
+- keep 有现存 canonical 时逐字复制。首次从准确旧标题生成 canonical 时，保留原标题的整体目标；“设计”仍是设计，“修复”仍是修复，不能缩成最新的间距、提示、测试等子步骤。
+- 若唯一改动原因是类别换成方括号、删除 emoji、补分隔符或改成对象在前，action 必须是 keep。“规范分类表达”不是 rename 理由。
+- 充分用户语言证据要求把原标题翻译为另一语言时，action 必须是 rename，即使对象与主线不变；否则宿主会保留原标题语言。
+- 最后确认 title 不含日期、✓ 或 emoji，且完整长度不超过 39 字符；不要通过换成中文来缩短英文或日文。
+通用对照：旧标题「🎨 收藏夹设计」，随后只调整按钮间距，输出 keep 与「[设计] 收藏夹｜设计」；旧标题「🛠️ 构建工具超时修复」，仍修复同一故障，输出 keep 与「[排障] 构建工具｜超时修复」。
+语言对照：英文请求 “Fix expired verification codes” 用「[排障] Verification codes｜Fix expiry」；日文请求改善已有画面用「[优化] ログイン画面｜配置改善」。类别为中文，正文保持用户语言。
+
 只返回 JSON，恰好包含 action、title、status、reason 四个字段。action 只允许 keep 或 rename；status 只允许 active 或 completed。title 为 canonical title，无依据的 keep 可为空字符串。reason 不超过 40 个汉字，简述主线或完成依据；reason 的语言不影响 title 语言。
 例如：{"action":"keep","title":"[分析] Codex｜Luna 后台调用","status":"completed","reason":"用户明确验收通过并要求收尾"}
