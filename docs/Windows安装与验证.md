@@ -4,7 +4,7 @@
 
 ## 安装条件
 
-1. 安装 Python 3.10 或以上版本及 Python Launcher，确保 `py -3 --version` 可用。只有 `python.exe` 可用不够，当前 Windows Hook 调用 `py -3 -X utf8`；缺少 `py` 时先安装 Launcher，不改写 Hook 绕过此依赖。
+1. 安装 Python 3.10 或以上版本并加入 PATH，确保 `python --version` 可用。Windows Hook 使用 `python -X utf8`，不依赖 `py` Launcher。Codex Desktop 进程也必须能从 PATH 找到该解释器。
 2. 安装并登录兼容的 Codex CLI。可使用 PATH 中的原生 `codex.exe`，或标准 npm 安装提供的 `codex.cmd`。
 3. 将完整插件安装到本机 Codex，通过官方 Hook 管理入口检查并信任定义。安装插件本身不代表 Hook 已获信任。
 
@@ -13,8 +13,8 @@
 在插件目录的 PowerShell 中运行：
 
 ```powershell
-py -3 scripts/oil_codex_title.py doctor
-py -3 scripts/oil_codex_title.py configure --codex-bin 'C:\Codex\codex.exe'
+python scripts/oil_codex_title.py doctor
+python scripts/oil_codex_title.py configure --codex-bin 'C:\Codex\codex.exe'
 ```
 
 第二条仅在默认检测找不到正确 CLI 时使用，替换为实际存在的路径。
@@ -31,9 +31,9 @@ py -3 scripts/oil_codex_title.py configure --codex-bin 'C:\Codex\codex.exe'
 git clone --branch codex/personal-title-policy https://github.com/MaddogQ/oil-codex-title.git D:\01_WORKS\oil-codex-title-personal
 Set-Location D:\01_WORKS\oil-codex-title-personal
 git remote add upstream https://github.com/oil-oil/oil-codex-title.git
-py -3 --version
+python --version
 codex --version
-py -3 scripts/oil_codex_title.py doctor
+python scripts/oil_codex_title.py doctor
 ```
 
 已经克隆时直接进入现有目录并检查 `git branch --show-current` 和 `git remote -v`，不要重复克隆或覆盖本地修改。`upstream` 已存在时保留正确地址。
@@ -70,9 +70,10 @@ py -3 scripts/oil_codex_title.py doctor
 ```powershell
 codex plugin marketplace add D:\01_WORKS
 codex plugin marketplace list
+codex plugin add oil-codex-title@oil-title-personal --json
 ```
 
-`source.path` 相对市场根目录解析，不能相对 `.agents/plugins` 目录解析。若已安装上游同名插件，先在插件目录禁用上游版本，避免两个 Stop Hook 同时处理标题。仅注册市场还没有安装插件。在 Codex Desktop 插件目录选择该本地市场，安装并启用完整的 `oil-codex-title` 插件，再重启 App。
+`source.path` 相对市场根目录解析，不能相对 `.agents/plugins` 目录解析。若已安装上游同名插件，先在插件目录禁用上游版本，避免两个 Stop Hook 同时处理标题。仅注册市场还没有安装插件；上面的 `plugin add` 会安装并启用完整插件。也可以在 Codex Desktop 插件目录选择该本地市场安装。安装后核验 Hook 信任状态，界面未刷新时再重启 App。
 
 此仓库本身没有市场 catalog，不能把 `codex plugin marketplace add MaddogQ/oil-codex-title` 当作完整安装。这里使用本地 catalog 指向指定分支的 clone。[OpenAI 官方插件文档](https://developers.openai.com/plugins/build/plugins)说明本地市场注册、相对路径和桌面安装流程。
 
@@ -80,7 +81,7 @@ codex plugin marketplace list
 
 1. 检查 `codex features list`，需要时运行 `codex features enable hooks`。
 2. 在 Codex 的官方 Hook 管理入口检查并信任插件的 Stop Hook。CLI 中使用 `/hooks`；Desktop 的入口随版本变化，通过实际界面确认。
-3. 运行 `py -3 scripts/oil_codex_title.py doctor`。它检查程序与读取能力，不证明 Desktop 自然触发已经成功。
+3. 运行 `python scripts/oil_codex_title.py doctor`。它检查程序与读取能力，不证明 Desktop 自然触发已经成功。
 4. 在新对话正常提出具体任务，结束一轮后检查日志、真实标题元数据与侧边栏显示。
 5. 用“验收通过，收尾吧”检查 `✓ `，再提出新实质任务，核对 `✓ ` 移除且创建日期不变。
 
@@ -102,7 +103,7 @@ git pull --ff-only origin codex/personal-title-policy
 git switch codex/personal-title-policy
 git fetch upstream
 git merge upstream/main
-py -3 -m unittest discover -s tests -v
+python -m unittest discover -s tests -v
 git diff
 git status --short
 ```
@@ -113,7 +114,7 @@ git status --short
 
 ## 已适配的行为
 
-- Hook 使用 Windows 专用命令 `py -3 -X utf8`，通过插件路径变量定位脚本。
+- Hook 使用 Windows 专用命令 `python -X utf8`，通过插件路径变量定位脚本。
 - Windows 使用标准库 `msvcrt` 的内核字节锁；macOS/Linux 保留 `fcntl`。进程退出后自动释放锁。
 - 子进程使用参数数组与 UTF-8 管道，支持路径中的中文、空格和 Unicode 标题。
 - 后台 Codex 子进程不创建新的控制台窗口。
@@ -128,3 +129,7 @@ git status --short
 账号环境中的最终检查仍需在 Windows Codex 中完成：新建正常话题、结束一轮有具体目标的对话、检查后台日志与实际显示标题，确认没有额外命名消息。没有这一步证据时，不宣称 Windows 桌面体验已经完整验收。
 
 参考：[官方 Hook 的 Windows 命令与异步配置](https://learn.chatgpt.com/docs/hooks)、[Python Windows 文件锁](https://docs.python.org/3/library/msvcrt.html)。
+
+## 本机安装记录（2026-10-01）
+
+已通过官方 CLI 注册本地市场并安装 `oil-codex-title@oil-title-personal`，版本 `0.1.0+personal.20261001`。已读回 `installed=true`、`enabled=true`；桌面内置 CLI 的 `doctor` 返回 `hook.status=ready`，Stop 定义为 `enabled=true`、`trustStatus=trusted`。Windows Hook 使用现有 Python 3.12.9，无须安装 Launcher。144 项程序测试通过，包括中文和空格路径下执行实际 Windows Hook 命令。自然 Stop 触发与 Desktop 显示仍需单独验证。

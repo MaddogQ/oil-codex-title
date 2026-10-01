@@ -2,6 +2,7 @@
 import errno
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -114,6 +115,19 @@ class PlatformTests(unittest.TestCase):
         with patch("codex_adapter.process_options", return_value={"creationflags":0}), patch("codex_adapter.subprocess.run", side_effect=fake_run):
             candidate, _ = generate_title("codex.exe",app.DEFAULTS,{"current_title":"旧标题","original_goal":"修复中文工具"},ROOT)
         self.assertEqual(candidate,expected)
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows command entry')
+    def test_windows_hook_runs_with_python_without_py_launcher(self):
+        plugin = self.root / '插件 目录'
+        shutil.copytree(ROOT / 'scripts', plugin / 'scripts', ignore=shutil.ignore_patterns('__pycache__'))
+        config = json.loads((ROOT / 'hooks/hooks.json').read_text(encoding='utf-8'))
+        command = config['hooks']['Stop'][0]['hooks'][0]['commandWindows']
+        self.assertTrue(command.startswith('python -X utf8 '))
+        env = os.environ | {'OIL_CODEX_TITLE_DATA': str(self.root / 'state'),
+                            'OIL_CODEX_TITLE_WORKER': '1'}
+        result = subprocess.run(command.replace('${PLUGIN_ROOT}', str(plugin)), shell=True,
+                                input='ignored', capture_output=True, encoding='utf-8', env=env, timeout=10)
+        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '{}\n', ''))
 
     def test_fixture_evaluator_can_read_chinese_in_legacy_locale(self):
         env = os.environ | {'PYTHONUTF8':'0','PYTHONIOENCODING':'utf-8'}

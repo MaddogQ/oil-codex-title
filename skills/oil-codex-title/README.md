@@ -10,7 +10,7 @@
 
 ## 兼容性与依赖
 
-需要 Python 3.10+、已登录的本地 Codex CLI 和宿主工具。上游 macOS 实测与跨平台自动化记录属于旧策略；本 fork 的新策略不能据此宣称 Desktop 已验收。Windows 后台 Hook 需要可用的 `py -3` Launcher。云端不支持后台入口。
+需要 Python 3.10+、已登录的本地 Codex CLI 和宿主工具。上游 macOS 实测与跨平台自动化记录属于旧策略；本 fork 的新策略不能据此宣称 Desktop 已验收。Windows 后台 Hook 需要PATH 中可用的 Python 3.10+。云端不支持后台入口。
 
 ## 数据与权限边界
 

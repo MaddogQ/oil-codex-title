@@ -22,15 +22,17 @@
 复制下面这段话发给 Codex：
 
 ```text
-帮我克隆 GitHub 仓库 MaddogQ/oil-codex-title 的 codex/personal-title-policy 分支，按 docs/Windows安装与验证.md 创建本地插件市场并安装完整插件，包含 Stop Hook，不要只安装 Skill。检查 Python Launcher、已登录的 Codex CLI、hooks 开关和 doctor。告诉我需要在界面安装、启用与信任 Hook 的具体操作。保留 upstream remote，不开启归档，也不批量改写历史标题。
+帮我克隆 GitHub 仓库 MaddogQ/oil-codex-title 的 codex/personal-title-policy 分支，按 docs/Windows安装与验证.md 创建本地插件市场并安装完整插件，包含 Stop Hook，不要只安装 Skill。检查 PATH 中的 Python 3.10+、已登录的 Codex CLI、hooks 开关和 doctor。告诉我需要在界面安装、启用与信任 Hook 的具体操作。保留 upstream remote，不开启归档，也不批量改写历史标题。
 ```
 
 详细命令见 [Windows 安装与验证](docs/Windows安装与验证.md)。本 fork 保持上游现有模型选择、reasoning effort 和服务档位配置，通过既有 Codex CLI 调用；不新增模型路由，不强制切换主对话模型。后台命名仍消耗当前 Codex 账号的模型额度。
+
+当前个人使用范围为中文会话生成中文标题；多语言与历史英文标题迁移暂不扩展。Windows 入口使用 `python -X utf8`，无需 `py` Launcher。
 
 ## 日常使用
 
 可以说“预览这个话题的新标题”“固定这个话题的标题”“暂停自动命名”“恢复自动命名”或“查看命名用量”。
 
-这是预览版。本机 143 项程序测试通过；95 个真实模型合成案例中，经过程序保护的决策有 89 项通过，6 个非中文案例仍未通过，详见验证记录。Windows Desktop 自然 Hook 触发尚未验收。桌面置顶列表也可能继续显示旧缓存，标题元数据写入与实际显示需分别核验。
+这是预览版。本机 144 项程序测试通过；95 个真实模型合成案例中，经过程序保护的决策有 89 项通过，6 个多语言/跨语言案例仍未通过，详见验证记录。Windows Desktop 自然 Hook 触发尚未验收。桌面置顶列表也可能继续显示旧缓存，标题元数据写入与实际显示需分别核验。
 
 [分类与完成状态](docs/使用与边界.md) · [命名与回归规范](docs/命名与回归规范.md) · [验证记录](docs/发布验收.md) · [MIT 许可证](LICENSE)

@@ -17,7 +17,7 @@ metadata:
 
 ## 检查与配置
 
-Windows 下将示例的 `python3` 换成 `py -3`，需要已安装 Python Launcher。Windows 启动与 CLI 路径说明见插件根目录 `docs/Windows安装与验证.md`。
+Windows 下将示例的 `python3` 换成 `python`，需要 PATH 中的 `python` 为 Python 3.10+。Windows 启动与 CLI 路径说明见插件根目录 `docs/Windows安装与验证.md`。
 
 1. 执行 `python3 <入口> doctor`，检查 Python、Codex 路径和 App Server。
 2. 用户提供话题时，追加 `--thread <话题 ID>` 验证读取兼容性。

@@ -1,6 +1,6 @@
 {
   "name": "oil-codex-title",
-  "version": "0.1.0+personal.20260930",
+  "version": "0.1.0+personal.20261001",
   "description": "在每轮对话结束后，维护创建日期、9 类任务标题和独立完成状态。",
   "author": {
     "name": "oil"
