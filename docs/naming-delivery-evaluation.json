@@ -1,0 +1,83 @@
+{
+  "model": "gpt-5.6-luna",
+  "service_tier": "priority",
+  "cases": 3,
+  "passed": 3,
+  "model_cases": 3,
+  "median_seconds": 3.5,
+  "notice": "passed 检查模型输出经程序确定性保护后的决策；model_candidate/model_errors 单独保留原始模型表现。有限合成案例不代表普遍准确率，也不验证桌面显示。",
+  "results": [
+    {
+      "case": "交付完成",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "修复已提交推送且交付更新完成",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "修复已提交推送且交付更新完成",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.5,
+      "usage": {
+        "input_tokens": 7930,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 88,
+        "reasoning_output_tokens": 38
+      }
+    },
+    {
+      "case": "推送失败",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "仍需处理推送失败并更新 PR",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "仍需处理推送失败并更新 PR",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.38,
+      "usage": {
+        "input_tokens": 7909,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 78,
+        "reasoning_output_tokens": 30
+      }
+    },
+    {
+      "case": "仍需验收",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "主线未变且导出图片仍需修复验收",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "主线未变且导出图片仍需修复验收",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 3.58,
+      "usage": {
+        "input_tokens": 7918,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 80,
+        "reasoning_output_tokens": 27
+      }
+    }
+  ]
+}

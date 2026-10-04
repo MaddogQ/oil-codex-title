@@ -1,15 +1,27 @@
 {
   "description": "在后台用独立模型检查话题标题，只更新标题元数据。",
   "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/scripts/oil_codex_title.py\" hook",
+            "timeout": 3,
+            "commandWindows": "python -X utf8 \"${PLUGIN_ROOT}/scripts/oil_codex_title.py\" hook"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/scripts/oil_codex_title.py\" hook",
-            "async": true,
             "timeout": 500,
-            "commandWindows": "python -X utf8 \"${PLUGIN_ROOT}/scripts/oil_codex_title.py\" hook"
+            "commandWindows": "python -X utf8 \"${PLUGIN_ROOT}/scripts/oil_codex_title.py\" hook",
+            "async": true
           }
         ]
       }

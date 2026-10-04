@@ -309,13 +309,15 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(result['status'], 'metadata_unavailable')
         self.assertEqual(self.state(), before)
 
-    def test_created_date_mismatch_preserves_original_date_and_title(self):
+    def test_resumed_created_at_preserves_original_date_and_allows_completion(self):
         self.process()
         before = self.state()
         self.backend.thread['createdAt'] = '2026-10-01T12:00:00Z'
-        self.append('继续做这件事')
-        self.assertEqual(self.process(lambda _: self.fail())['status'], 'metadata_changed')
-        self.assertEqual(self.state(), before)
+        self.append('验收通过，收尾吧')
+        result = self.process(lambda _: candidate('completed'))
+        self.assertEqual(result['completion_status'], 'completed')
+        self.assertEqual(self.state()['created_date'], before['created_date'])
+        self.assertTrue(result['title'].startswith('✓ ' + before['created_date'] + ' '))
 
     def test_old_state_and_emoji_keep_do_not_migrate_display(self):
         old = '🧩 Codex｜Luna 后台调用'

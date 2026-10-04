@@ -1,5 +1,6 @@
 """测试跨进程命名中的写入边界、保护规则和 Hook 输出契约。"""
 import copy
+import io
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -239,6 +241,182 @@ class TitleTests(unittest.TestCase):
     def test_stale_hook_does_not_call_model(self):
         self.assertEqual(self.process(lambda _: self.fail(), apply=True, event_turn=NEW_TURN)["status"], "outdated_event")
 
+    def test_session_end_updates_unprocessed_turn_and_deduplicates_stop(self):
+        model = Mock(side_effect=proposal)
+        result = self.process(model, apply=True, session_end=True)
+        self.assertEqual(result["status"], "renamed")
+        self.assertEqual(result["completion_status"], "active")
+        self.assertEqual(self.process(model, apply=True, event_turn=TURN)["status"], "unchanged")
+        self.assertEqual(self.process(model, apply=True, session_end=True)["status"], "unchanged")
+        self.assertEqual(model.call_count, 1)
+
+    def test_session_end_after_stop_does_not_repeat_model(self):
+        self.process(apply=True, event_turn=TURN)
+        self.assertEqual(self.process(lambda _: self.fail(), apply=True, session_end=True)["status"], "unchanged")
+
+    def test_session_end_preserves_protection_and_rejects_unfinished_turns(self):
+        for condition, expected in (("empty", "empty"), ("archived", "archived"),
+                                    ("locked", "locked"), ("disabled", "disabled"),
+                                    ("failed", "unfinished_turn"), ("interrupted", "unfinished_turn")):
+            with self.subTest(condition=condition):
+                self.backend = FakeBackend()
+                self.config = title.DEFAULTS.copy()
+                title.state_path(self.root, ID).unlink(missing_ok=True)
+                if condition == "empty":
+                    self.backend.thread["turns"] = []
+                elif condition == "archived":
+                    self.backend.archived = True
+                elif condition == "locked":
+                    title.atomic_json(title.state_path(self.root, ID), {"locked": True})
+                elif condition == "disabled":
+                    self.config["enabled"] = False
+                else:
+                    self.backend.thread["turns"][-1]["status"] = condition
+                self.assertEqual(self.process(lambda _: self.fail(), apply=True, session_end=True)["status"], expected)
+                self.assertEqual(self.backend.writes, [])
+
+    def test_session_end_discards_result_after_new_activity(self):
+        def moved(context):
+            self.backend.thread["turns"].append({"id": NEW_TURN, "status": "inProgress", "items": []})
+            return proposal(context)
+        self.assertEqual(self.process(moved, apply=True, session_end=True)["status"], "stale_result")
+        self.assertEqual(self.backend.writes, [])
+
+    def test_session_end_hook_launches_without_turn_id_or_model(self):
+        payload = {"hook_event_name": "SessionEnd", "session_id": ID, "reason": "other"}
+        with patch.dict(os.environ, {"OIL_CODEX_TITLE_DATA": str(self.root), "OIL_CODEX_TITLE_WORKER": "0"}), \
+                patch.object(sys, "argv", ["title", "hook"]), \
+                patch.object(sys, "stdin", io.StringIO(json.dumps(payload))), \
+                patch.object(sys, "stdout", io.StringIO()) as output, \
+                patch.object(title, "launch_session_end") as launch, \
+                patch.object(title, "find_codex") as find:
+            self.assertEqual(title.main(), 0)
+            launch.assert_called_once_with(ID)
+            find.assert_not_called()
+            self.assertEqual(output.getvalue(), "{}\n")
+
+    def test_ordinary_stop_never_calls_model_or_launches_worker(self):
+        payload = {"hook_event_name": "Stop", "session_id": ID, "turn_id": TURN}
+        with patch.dict(os.environ, {"OIL_CODEX_TITLE_DATA": str(self.root), "OIL_CODEX_TITLE_WORKER": "0"}), \
+                patch.object(sys, "argv", ["title", "hook"]), \
+                patch.object(sys, "stdin", io.StringIO(json.dumps(payload))), \
+                patch.object(sys, "stdout", io.StringIO()), \
+                patch.object(title, "find_codex", return_value="unused"), \
+                patch.object(title, "CodexBackend") as backend, \
+                patch.object(title, "limited_title") as model, \
+                patch.object(title, "launch_session_end") as launch:
+            backend.return_value.__enter__.return_value = self.backend
+            self.assertEqual(title.main(), 0)
+            model.assert_not_called()
+            launch.assert_not_called()
+
+    def test_stop_closure_then_session_end_only_evaluates_once(self):
+        self.backend.thread["turns"][0]["items"][0]["content"][0]["text"] = "当前任务已解决，后续会在其他session实现"
+        model = Mock(side_effect=proposal)
+        result = self.process(model, apply=True, event_turn=TURN, stop_only=True)
+        self.assertEqual(result["completion_status"], "completed")
+        self.assertEqual(self.process(model, apply=True, session_end=True)["status"], "unchanged")
+        self.assertEqual(model.call_count, 1)
+
+    def test_stop_rejects_non_closure_and_does_not_cache_it(self):
+        for text in ("继续优化", "任务尚未解决", "文档示例：当前任务已解决", "这个解决了，接下来修复登录页", "好的", "可以推送"):
+            with self.subTest(text=text):
+                self.backend.thread["turns"][0]["items"][0]["content"][0]["text"] = text
+                result = self.process(lambda _: self.fail("普通轮次不调用模型"), apply=True, event_turn=TURN, stop_only=True)
+                self.assertEqual(result["status"], "awaiting_session_end")
+                self.assertFalse(title.state_path(self.root, ID).exists())
+
+    def test_stop_after_stale_session_end_processes_new_closure(self):
+        def moved(context):
+            self.backend.thread["turns"].append({"id": NEW_TURN, "status": "completed", "items": [
+                {"type": "userMessage", "content": [{"type": "text", "text": "当前任务已完成，后续在其他会话实现"}]},
+                {"type": "agentMessage", "phase": "final_answer", "text": "已收尾。"},
+            ]})
+            return proposal(context)
+        self.assertEqual(self.process(moved, apply=True, session_end=True)["status"], "stale_result")
+        result = self.process(apply=True, event_turn=NEW_TURN, stop_only=True)
+        self.assertEqual(result["completion_status"], "completed")
+
+    def test_stop_does_not_use_old_closure_or_assistant_claim(self):
+        self.backend.thread["turns"][0]["items"][0]["content"][0]["text"] = "任务已完成"
+        self.backend.thread["turns"].append({"id": NEW_TURN, "status": "completed", "items": [
+            {"type": "userMessage", "content": [{"type": "text", "text": "继续修复登录页"}]},
+            {"type": "agentMessage", "phase": "final_answer", "text": "任务已完成"},
+        ]})
+        result = self.process(lambda _: self.fail(), apply=True, event_turn=NEW_TURN, stop_only=True)
+        self.assertEqual(result["status"], "awaiting_session_end")
+        self.backend.thread["turns"][-1]["items"].pop(0)
+        result = self.process(lambda _: self.fail(), apply=True, event_turn=NEW_TURN, stop_only=True)
+        self.assertEqual(result["status"], "awaiting_session_end")
+
+    def test_skill_reference_does_not_veto_completed_delivery(self):
+        self.backend.thread["turns"][0]["items"][0]["content"].append(
+            {"type": "skill", "name": "art-tool", "path": "skills/art-tool/SKILL.md"})
+        self.backend.thread["turns"].append({"id": NEW_TURN, "status": "completed", "items": [
+            {"type": "userMessage", "content": [{"type": "text", "text": "推送修改并更新 PR"}]},
+            {"type": "agentMessage", "phase": "final_answer", "text": "已推送，PR 已更新，工作区干净。"},
+        ]})
+        def completed(context):
+            self.assertTrue(context["completion_context_complete"])
+            self.assertNotIn("skills/art-tool", json.dumps(context))
+            candidate, usage = proposal(context)
+            return {**candidate, "status": "completed"}, usage
+        result = self.process(completed, apply=True, session_end=True)
+        self.assertEqual(result["completion_status"], "completed")
+        entries = [json.loads(line) for line in (self.root / "logs" / (ID + ".jsonl")).read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(entries[-1]["hook_event_name"], "SessionEnd")
+
+    def test_nontext_evidence_still_blocks_completion(self):
+        for kind in ("image", "localImage", "unknown"):
+            with self.subTest(kind=kind):
+                self.backend = FakeBackend()
+                self.backend.thread["turns"][0]["items"][0]["content"].append({"type": kind})
+                context = title.snapshot(self.backend.thread, self.config)["context"]
+                candidate, _ = proposal(context)
+                self.assertEqual(title.normalize_decision({**candidate, "status": "completed"}, context)["status"], "active")
+
+    def test_new_image_during_completion_discards_result(self):
+        def moved(context):
+            self.backend.thread["turns"][0]["items"][0]["content"].append({"type": "image"})
+            candidate, usage = proposal(context)
+            return {**candidate, "status": "completed"}, usage
+        self.assertEqual(self.process(moved, apply=True, session_end=True)["status"], "stale_result")
+        self.assertEqual(self.backend.writes, [])
+
+    def test_policy_upgrade_rechecks_old_active_once(self):
+        with patch.object(title, "POLICY_VERSION", title.POLICY_VERSION - 1):
+            self.process(apply=True)
+        model = Mock(side_effect=proposal)
+        self.process(model, apply=True, session_end=True)
+        self.assertEqual(self.process(model, apply=True, session_end=True)["status"], "unchanged")
+        self.assertEqual(model.call_count, 1)
+
+    def test_doctor_requires_both_trusted_hooks(self):
+        for event, trust, expected in (("Stop", "trusted", "needs_trust_or_enable"),
+                                        ("SessionEnd", "untrusted", "needs_trust_or_enable"),
+                                        ("SessionEnd", "trusted", "ready"),
+                                        ("sessionEnd", "trusted", "ready")):
+            with self.subTest(event=event, trust=trust), patch.object(title.subprocess, "run") as run, \
+                    patch.object(title, "CodexBackend") as backend:
+                run.return_value.stdout = "test-version"
+                backend.return_value.__enter__.return_value.call.return_value = {"data": [{"hooks": [{
+                    "pluginId": "oil-codex-title@test", "eventName": event, "enabled": True, "trustStatus": trust},
+                    {"pluginId": "oil-codex-title@test", "eventName": "stop", "enabled": True, "trustStatus": "trusted"}]}]}
+                self.assertEqual(title.doctor("unused", self.root, self.config)["hook"]["status"], expected)
+
+    def test_session_end_worker_uses_existing_processing_pipeline(self):
+        with patch.dict(os.environ, {"OIL_CODEX_TITLE_DATA": str(self.root), "OIL_CODEX_TITLE_WORKER": "0"}), \
+                patch.object(sys, "argv", ["title", "session-end", ID]), \
+                patch.object(sys, "stdout", io.StringIO()) as output, \
+                patch.object(title, "CodexBackend") as backend, \
+                patch.object(title, "find_codex", return_value="unused"), \
+                patch.object(title, "limited_title", side_effect=lambda *a, **k: proposal(a[3])) as model:
+            backend.return_value.__enter__.return_value = self.backend
+            self.assertEqual(title.main(), 0)
+            self.assertEqual(output.getvalue(), "{}\n")
+            self.assertEqual(model.call_count, 1)
+            self.assertEqual(len(self.backend.writes), 1)
+
     def test_pause_during_generation_prevents_write(self):
         def paused(context):
             title.atomic_json(self.root / "config.json", {"enabled": False})
@@ -277,6 +455,21 @@ class TitleTests(unittest.TestCase):
         worker.join(timeout=2)
         self.assertFalse(worker.is_alive())
         self.assertEqual(result[0]["status"], "renamed")
+
+    def test_session_end_waits_for_stop_then_rechecks_fingerprint(self):
+        result = []
+        with title.thread_lock(self.root, ID):
+            worker = threading.Thread(target=lambda: result.append(
+                self.process(lambda _: self.fail(), apply=True, session_end=True)))
+            worker.start()
+            time.sleep(0.05)
+            self.assertEqual(result, [])
+            snap = title.snapshot(self.backend.thread, self.config)
+            title.atomic_json(title.state_path(self.root, ID),
+                              {"last_seen_title": snap["title"], "last_fingerprint": snap["fingerprint"]})
+        worker.join(timeout=2)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(result[0]["status"], "unchanged")
 
     def test_context_omits_ambient_state_tools_and_commentary(self):
         items = self.backend.thread["turns"][0]["items"]

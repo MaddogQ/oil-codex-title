@@ -1,0 +1,72 @@
+[
+  {
+    "id": "直接合并后交付",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active", "completion_context_complete": true,
+      "original_goal": "修复导出面板布局", "project_hint": "",
+      "recent_turns": [{"id": "1", "messages": [
+        {"role": "user", "text": "直接合并然后收尾吧"},
+        {"role": "assistant", "text": "PR #42 已合并，当前 main 已同步。布局修复已验证，工作树已清理。Remaining: None."}
+      ]}]
+    },
+    "expected": {"action": "keep", "status": "completed", "exact_title": "[排障] 导出面板｜布局修复"}
+  },
+  {
+    "id": "验收合入后保留备份",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active", "completion_context_complete": true,
+      "original_goal": "修复导出面板布局", "project_hint": "",
+      "recent_turns": [{"id": "1", "messages": [
+        {"role": "user", "text": "验收通过，合入并收尾吧"},
+        {"role": "assistant", "text": "PR #42 已合入 main，已核对远程和本地状态。备份与历史目录保留供追溯。Remaining: None."}
+      ]}]
+    },
+    "expected": {"action": "keep", "status": "completed", "exact_title": "[排障] 导出面板｜布局修复"}
+  },
+  {
+    "id": "合并失败仍需处理",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active", "completion_context_complete": true,
+      "original_goal": "修复导出面板布局", "project_hint": "",
+      "recent_turns": [{"id": "1", "messages": [
+        {"role": "user", "text": "验收通过，合入并收尾吧"},
+        {"role": "assistant", "text": "修复已提交推送，但 PR 合并失败，仍有冲突待处理。"}
+      ]}]
+    },
+    "expected": {"action": "keep", "status": "active", "exact_title": "[排障] 导出面板｜布局修复"}
+  },
+  {
+    "id": "自动合并尚未落地",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active", "completion_context_complete": true,
+      "original_goal": "修复导出面板布局", "project_hint": "",
+      "recent_turns": [{"id": "1", "messages": [
+        {"role": "user", "text": "直接合并然后收尾吧"},
+        {"role": "assistant", "text": "PR 已开启自动合并，等待 CI，还未进入 main。"}
+      ]}]
+    },
+    "expected": {"action": "keep", "status": "active", "exact_title": "[排障] 导出面板｜布局修复"}
+  },
+  {
+    "id": "合入后部署尚未完成",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active", "completion_context_complete": true,
+      "original_goal": "修复导出面板布局并部署", "project_hint": "",
+      "recent_turns": [{"id": "1", "messages": [
+        {"role": "user", "text": "合入 main 后部署并验收"},
+        {"role": "assistant", "text": "PR #42 已合入 main，但部署失败，仍需修复并验收。"}
+      ]}]
+    },
+    "expected": {"action": "keep", "status": "active", "exact_title": "[排障] 导出面板｜布局修复"}
+  }
+]

@@ -32,7 +32,7 @@ DEFAULTS = {
     "model_timeout_seconds": 100,
     "max_parallel_workers": 2,
 }
-POLICY_VERSION = 9
+POLICY_VERSION = 13
 MAX_TITLE_LENGTH = 48
 
 
@@ -144,7 +144,7 @@ def ensure_title_active(backend, thread_id, root):
 
 
 def read_settled_thread(backend, thread_id, event_turn, timeout=5):
-    """确认 Stop 对应轮次已完成；异步保存尚未完成时短暂轮询。"""
+    """确认 Hook 对应轮次已完成；异步保存尚未完成时短暂轮询。"""
     deadline = time.monotonic() + timeout
     while True:
         thread = backend.read(thread_id)
@@ -257,17 +257,21 @@ def snapshot(thread, config):
     if effective:
         original = next(m["text"] for m in effective[0]["messages"] if m["role"] == "user")[:800]
     latest_id = turns[-1]["id"] if turns else None
+    latest_closure = bool(selected) and explicit_closure("\n".join(
+        m["text"] for m in selected[-1]["messages"] if m["role"] == "user"))
     context = {"current_title": title, "project_hint": project_hint(thread),
                "original_goal": original, "recent_turns": recent,
                "current_canonical_title": canonical_title(title),
                "completion_context_complete": bool(effective) and all(
-                   len(m["text"]) <= min(per_message, 1200)
-                   for t in selected for m in t["messages"] if m["role"] == "user"
+                   len(m["text"]) <= min(per_message, 1200 if m["role"] == "user" else 500)
+                   for t in selected for m in t["messages"]
+                   if m["role"] == "user" or (t is selected[-1] and not latest_closure)
                ) and all(t.get("itemsView", "full") == "full" for t in turns[-config["recent_turns"]:])
-               and all(part.get("type") == "text" for t in turns[-config["recent_turns"]:]
+                and all(part.get("type") in ("text", "skill") for t in turns[-config["recent_turns"]:]
                        for item in t.get("items", []) if item.get("type") == "userMessage"
                        for part in item.get("content", []))}
     signature = json.dumps({"policy_version": POLICY_VERSION, "project_hint": context["project_hint"],
+                            "completion_context_complete": context["completion_context_complete"],
                            "latest_id": latest_id, "effective": effective[-config["recent_turns"]:]},
                            ensure_ascii=False, sort_keys=True)
     fingerprint = hashlib.sha256(signature.encode()).hexdigest()
@@ -343,6 +347,42 @@ def validate_candidate(candidate, current_title):
     return {**candidate, "title": title, "reason": candidate["reason"][:300]}
 
 
+def explicit_closure(text):
+    """仅整句收尾或明确移交其他会话；不匹配引用、否定或本会话新任务。"""
+    text = re.sub(r"[\s,，。！!.]+", "", text).casefold()
+    endings = {"可以了谢谢", "这个解决了", "不用继续了", "不用追踪了", "done", "就这样",
+               "问题已经修好了", "确认了可以不用追踪了", "验收通过收尾吧",
+               "验收没问题可以收尾", "这个通过了结束吧", "可以收尾了"}
+    return text in endings or bool(re.fullmatch(
+        r"(?:当前|本次|这个)?(?:任务|问题)(?:已解决|已完成|已经解决|已经完成)"
+        r"(?:后续(?:会)?在(?:其他|另一个|新的)(?:session|会话)(?:中)?(?:实现|实施|继续))?", text))
+
+
+def reports_main_merge(turn):
+    """最新最终答复的合并报告只触发评估，不证明远程状态或强制完成。"""
+    if turn.get("status") != "completed" or turn.get("itemsView", "full") != "full":
+        return False
+    finals = [item_text(item) for item in turn.get("items", [])
+              if item.get("type") == "agentMessage" and item.get("phase") == "final_answer"]
+    if not finals:
+        return False
+    report = re.sub(r"```[\s\S]*?```", "", finals[-1])
+    report = re.sub(r"\[([^\]]+)\]\([^\s)]+\)", r"\1", report)
+    for line in report.splitlines():
+        line = line.strip().replace("`", "").replace("**", "")
+        if re.search(r"示例|例如|引用|如果|假如|未能|尚未|并非|不是|自动合并", line):
+            continue
+        # 从陈述开头匹配；引用、问题、计划与普通“完成”不属于该信号。
+        if re.search(r"[?？]", line):
+            continue
+        if re.match(r"(?:[-*] )?(?:PR\s*#?\d+\s*已(?:经)?(?:成功)?"
+                    r"(?:(?:合入|合并)(?:到|至)?\s*main(?=$|[\s。，,；;！!])|合并[，,]\s*当前\s*main\s*已同步)|"
+                    r"已将\s*PR\s*#?\d+\s*(?:成功)?合(?:入|并到)\s*main(?=$|[\s。，,；;！!])|"
+                    r"PR\s*#?\d+\s+(?:has been |was )?merged (?:into|to) main(?=$|[\s,;!]|\.(?:$|\s)))", line, re.I):
+            return True
+    return False
+
+
 def normalize_decision(candidate, context):
     """仅覆盖可确定的整句意图与纯格式变化，不猜测其他语义。"""
     candidate = dict(candidate)
@@ -374,10 +414,7 @@ def normalize_decision(candidate, context):
              if m.get("role") == "user"] if turns else []
     # 只匹配整段用户文本；引用、否定或随后提出的任务均不匹配。
     text = re.sub(r"[\s,，。！!.]+", "", "\n".join(users)).casefold()
-    endings = {"可以了谢谢", "这个解决了", "不用继续了", "不用追踪了", "done", "就这样",
-               "问题已经修好了", "确认了可以不用追踪了", "验收通过收尾吧",
-               "验收没问题可以收尾", "这个通过了结束吧", "可以收尾了"}
-    if text in endings:
+    if explicit_closure(text):
         candidate.update(status="completed", reason="用户明确整句收尾")
     elif text in {"继续", "可以继续", "continue"}:
         candidate.update(status="active", reason="用户明确继续工作")
@@ -422,25 +459,34 @@ def confirmation_only(thread, state, config):
     return len(pending)
 
 
-def process_thread(backend, generator, thread_id, root, config, *, apply=False, event_turn=None):
+def process_thread(backend, generator, thread_id, root, config, *, apply=False, event_turn=None, session_end=False, stop_only=False):
     with usage_scope(root, "naming", thread_id) as accounting:
-        result = _process_thread(backend, generator, thread_id, root, config, apply=apply, event_turn=event_turn)
+        result = _process_thread(backend, generator, thread_id, root, config, apply=apply,
+                                 event_turn=event_turn, session_end=session_end, stop_only=stop_only)
         accounting.outcome = result["status"]
+        if apply:
+            audit(root, thread_id, {**result, "hook_event_name": "SessionEnd" if session_end else "Stop" if stop_only else "manual"})
         return result
 
 
-def _process_thread(backend, generator, thread_id, root, config, *, apply=False, event_turn=None):
+def _process_thread(backend, generator, thread_id, root, config, *, apply=False, event_turn=None, session_end=False, stop_only=False):
     thread_id = valid_id(thread_id)
     if not config["enabled"]:
         return {"status": "disabled"}
     # 新轮次的 Hook 等待旧 Worker 释放锁，再判断是否已经过期，避免丢掉最新请求。
-    with thread_lock(root, thread_id, config["model_timeout_seconds"] * 2 + 20 if event_turn else 0) as acquired:
+    with thread_lock(root, thread_id, config["model_timeout_seconds"] * 2 + 20 if event_turn or session_end else 0) as acquired:
         if not acquired:
             return {"status": "busy"}
         path = state_path(root, thread_id)
         state = read_json(path)
         if backend.is_archived(thread_id):
             return {"status": "archived"}
+        if session_end:
+            # SessionEnd 没有 turn_id；在锁内读取旧会话的最后一轮，不推断任务完成。
+            turns = backend.read(thread_id).get("turns", [])
+            if not turns:
+                return {"status": "empty"}
+            event_turn = turns[-1]["id"]
         if event_turn:
             thread, pending = read_settled_thread(backend, thread_id, event_turn)
             if pending:
@@ -450,6 +496,15 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
         before = snapshot(thread, config)
         if not before["has_messages"]:
             return {"status": "empty"}
+        if stop_only:
+            # 明确收尾或最新最终合并报告放行；完成状态仍由完整摘录评估。
+            latest = thread.get("turns", [])[-1]
+            users = [item for item in latest.get("items", []) if item.get("type") == "userMessage"]
+            if (latest.get("itemsView", "full") != "full" or not users
+                    or any(part.get("type") not in ("text", "skill") for item in users for part in item.get("content", []))
+                    or not (explicit_closure("\n".join(item_text(item) for item in users))
+                            or reports_main_merge(latest))):
+                return {"status": "awaiting_session_end"}
         # 上次写入后进程被中断时，先核对待确认结果，避免误认作手工改名。
         if state.get("pending_title") == before["title"]:
             state.update(last_seen_title=before["title"], last_generated_title=before["title"])
@@ -479,8 +534,11 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             date = created_date(thread)
         except ValueError:
             return {"status": "metadata_unavailable", "title": before["title"]}
-        if state.get("created_date", date) != date:
-            return {"status": "metadata_changed", "title": before["title"]}
+        observed_date = date
+        # 宿主恢复会话可能重置 createdAt；沿用首次从官方元数据记录的创建日期。
+        date = state.get("created_date", date)
+        if not isinstance(date, str) or not re.fullmatch(r"[0-9]{6}", date):
+            return {"status": "metadata_unavailable", "title": before["title"]}
         completion = state.get("completion_status", "active")
         before["context"]["completion_status"] = completion
         before["context"]["current_canonical_title"] = (
@@ -539,7 +597,7 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
             return {"status": "archived"}
         fresh_thread = backend.read(thread_id)
         try:
-            if created_date(fresh_thread) != date:
+            if created_date(fresh_thread) != observed_date:
                 return {"status": "stale_result"}
         except ValueError:
             return {"status": "metadata_unavailable", "title": before["title"]}
@@ -574,7 +632,6 @@ def _process_thread(backend, generator, thread_id, root, config, *, apply=False,
         state.update(metadata)
         state["last_fingerprint"] = before["fingerprint"]
         atomic_json(path, state)
-        audit(root, thread_id, result)
         return result
 
 
@@ -595,8 +652,8 @@ def doctor(binary, root, config, thread_id=None):
             listing = backend.call("hooks/list", {"cwds": [cwd]})
             definitions = [hook for entry in listing.get("data", []) for hook in entry.get("hooks", [])
                            if (hook.get("pluginId") or "").split("@")[0] == "oil-codex-title"]
-            ready = any(h.get("enabled") and h.get("trustStatus") in ("trusted", "managed")
-                        for h in definitions)
+            ready = {"stop", "sessionend"}.issubset({str(h.get("eventName", "")).lower()
+                         for h in definitions if h.get("enabled") and h.get("trustStatus") in ("trusted", "managed")})
             output["hook"] = {
                 "status": "ready" if ready else "needs_trust_or_enable" if definitions else "not_loaded",
                 "definitions": [{k: h.get(k) for k in ("eventName", "enabled", "trustStatus", "sourcePath")}
@@ -607,6 +664,17 @@ def doctor(binary, root, config, thread_id=None):
     return output
 
 
+def launch_session_end(thread_id):
+    """退出 Hook 只有短暂执行窗口；独立进程继续命名，不持有宿主管道。"""
+    options = ({"creationflags": subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP}
+               if sys.platform == "win32" else {"start_new_session": True})
+    subprocess.Popen(
+        [sys.executable, "-X", "utf8", str(Path(__file__).resolve()), "session-end", thread_id],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        close_fds=True, **options,
+    )
+
+
 def main():
     # Hook 事件使用 UTF-8；不能依赖 Windows 当前代码页解释中文内容。
     for stream in (sys.stdin, sys.stdout, sys.stderr):
@@ -614,7 +682,9 @@ def main():
             stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="独立模型驱动的 Codex 话题命名")
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("hook", help="读取 Stop Hook stdin；保持宿主输出为空 JSON")
+    sub.add_parser("hook", help="读取收尾 Stop / SessionEnd Hook；保持宿主输出为空 JSON")
+    p = sub.add_parser("session-end", help="内部入口：会话结束后的独立命名进程")
+    p.add_argument("thread_id")
     p = sub.add_parser("doctor", help="只读检查运行环境")
     p.add_argument("--thread")
     sub.add_parser("status", help="显示配置和本地记录数量")
@@ -632,7 +702,10 @@ def main():
             p.add_argument("--apply", action="store_true", help="写入；省略时只预览")
     args = parser.parse_args()
     root = data_dir()
-    is_hook = args.command == "hook"
+    is_hook = args.command in ("hook", "session-end")
+    session_end = args.command == "session-end"
+    turn_id = None
+    event_name = "SessionEnd" if session_end else None
     thread_id = None
     try:
         if sys.version_info < (3, 10):
@@ -641,10 +714,16 @@ def main():
         if is_hook:
             if os.environ.get("OIL_CODEX_TITLE_WORKER") == "1" or not config["enabled"]:
                 return 0
+        if args.command == "hook":
             event = json.loads(sys.stdin.read(1024 * 1024))
-            if event.get("hook_event_name") != "Stop" or event.get("stop_hook_active"):
+            event_name = event.get("hook_event_name")
+            if event_name not in ("Stop", "SessionEnd") or event.get("stop_hook_active"):
                 return 0
             thread_id = valid_id(event["session_id"])
+            audit(root, thread_id, {"status": "received", "hook_event_name": event_name})
+            if event_name == "SessionEnd":
+                launch_session_end(thread_id)
+                return 0
             turn_id = valid_id(event["turn_id"])
         if args.command in ("pause", "resume", "configure"):
             config_path = root / "config.json"
@@ -695,10 +774,9 @@ def main():
                         backend, lambda context: limited_title(binary, root, config, context,
                             before_model=lambda: ensure_title_active(backend, thread_id, root)),
                         thread_id, root, config, apply=is_hook or args.apply,
-                        event_turn=turn_id if is_hook else None,
+                        session_end=session_end,
+                        event_turn=turn_id, stop_only=event_name == "Stop",
                     )
-                    if is_hook and result["status"] not in ("renamed", "kept"):
-                        audit(root, thread_id, result)
         if not is_hook:
             print(json.dumps(result, ensure_ascii=False))
         return 0
@@ -706,7 +784,7 @@ def main():
         error = {"status": "error", "error_type": type(exc).__name__}
         if is_hook:
             try:
-                audit(root, thread_id or "hook", error)
+                audit(root, thread_id or "hook", {**error, "hook_event_name": event_name})
             except Exception:
                 pass
             return 0

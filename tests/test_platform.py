@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -59,6 +60,45 @@ class PlatformTests(unittest.TestCase):
             p.communicate(timeout=10)
         with app.thread_lock(self.root, ID) as acquired:
             self.assertTrue(acquired)
+
+    def test_session_end_launcher_detaches_stdio_and_process(self):
+        for platform in ('win32', 'linux', 'darwin'):
+            with self.subTest(platform=platform), patch.object(sys, 'platform', platform), \
+                    patch.object(subprocess, 'DETACHED_PROCESS', 8, create=True), \
+                    patch.object(subprocess, 'CREATE_NEW_PROCESS_GROUP', 512, create=True), \
+                    patch.object(subprocess, 'Popen') as launch:
+                app.launch_session_end(ID)
+                args, options = launch.call_args
+                self.assertEqual(args[0][-2:], ['session-end', ID])
+                for stream in ('stdin', 'stdout', 'stderr'):
+                    self.assertEqual(options[stream], subprocess.DEVNULL)
+                self.assertTrue(options['close_fds'])
+                if platform == 'win32':
+                    self.assertEqual(options['creationflags'], 520)
+                else:
+                    self.assertTrue(options['start_new_session'])
+
+    def test_detached_helper_finishes_after_launcher_exits(self):
+        marker = self.root / '后台完成.txt'
+        # 仅替换子进程工作内容，使用实际 launcher 的隔离参数；不访问账号或模型。
+        code = '''
+import subprocess
+from unittest.mock import patch
+import oil_codex_title as app
+real_popen = subprocess.Popen
+child = "import sys,time; from pathlib import Path; time.sleep(0.5); Path(sys.argv[1]).write_text('done')"
+def spawn(args, **options):
+    return real_popen([sys.executable, '-c', child, sys.argv[2]], **options)
+with patch.object(subprocess, 'Popen', side_effect=spawn):
+    app.launch_session_end(sys.argv[3])
+'''
+        parent = self.child(code, marker, ID)
+        output, errors = parent.communicate(timeout=5)
+        self.assertEqual((parent.returncode, output, errors), (0, '', ''))
+        deadline = time.monotonic() + 5
+        while not marker.exists() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        self.assertEqual(marker.read_text(), 'done')
 
     def make_npm_binary(self, folder, target='x86_64-pc-windows-msvc', layout='bin'):
         exe = self.root / folder / 'vendor' / target / layout / 'codex.exe'
@@ -121,13 +161,19 @@ class PlatformTests(unittest.TestCase):
         plugin = self.root / '插件 目录'
         shutil.copytree(ROOT / 'scripts', plugin / 'scripts', ignore=shutil.ignore_patterns('__pycache__'))
         config = json.loads((ROOT / 'hooks/hooks.json').read_text(encoding='utf-8'))
-        command = config['hooks']['Stop'][0]['hooks'][0]['commandWindows']
-        self.assertTrue(command.startswith('python -X utf8 '))
         env = os.environ | {'OIL_CODEX_TITLE_DATA': str(self.root / 'state'),
                             'OIL_CODEX_TITLE_WORKER': '1'}
-        result = subprocess.run(command.replace('${PLUGIN_ROOT}', str(plugin)), shell=True,
-                                input='ignored', capture_output=True, encoding='utf-8', env=env, timeout=10)
-        self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '{}\n', ''))
+        for event in ('Stop', 'SessionEnd'):
+            with self.subTest(event=event):
+                hook = config['hooks'][event][0]['hooks'][0]
+                if event == 'SessionEnd':
+                    self.assertFalse(hook.get('async', False))
+                    self.assertLessEqual(hook['timeout'], 3)
+                command = hook['commandWindows']
+                self.assertTrue(command.startswith('python -X utf8 '))
+                result = subprocess.run(command.replace('${PLUGIN_ROOT}', str(plugin)), shell=True,
+                                        input='ignored', capture_output=True, encoding='utf-8', env=env, timeout=10)
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '{}\n', ''))
 
     def test_fixture_evaluator_can_read_chinese_in_legacy_locale(self):
         env = os.environ | {'PYTHONUTF8':'0','PYTHONIOENCODING':'utf-8'}
