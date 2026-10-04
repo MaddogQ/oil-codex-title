@@ -7,7 +7,7 @@ metadata:
 
 # oil-codex-title
 
-管理后台命名流程。主对话负责用户明确请求的设置与操作；自动命名由独立的 Stop Hook 执行。
+管理后台命名流程。主对话负责用户明确请求的设置与操作；自动命名由明确收尾、最新最终答复报告 PR 已合入 main 的 Stop，以及 SessionEnd 触发。普通 Stop 只做本地规则检查，不调用模型；两种入口共享内容去重。合并报告只触发评估，不强制完成，也不额外查询远程 PR 状态。
 
 ## 定位入口
 
@@ -17,7 +17,7 @@ metadata:
 
 ## 检查与配置
 
-Windows 下将示例的 `python3` 换成 `py -3`，需要已安装 Python Launcher。Windows 启动与 CLI 路径说明见插件根目录 `docs/Windows安装与验证.md`。
+Windows 下将示例的 `python3` 换成 `python`，需要 PATH 中的 `python` 为 Python 3.10+。Windows 启动与 CLI 路径说明见插件根目录 `docs/Windows安装与验证.md`。
 
 1. 执行 `python3 <入口> doctor`，检查 Python、Codex 路径和 App Server。
 2. 用户提供话题时，追加 `--thread <话题 ID>` 验证读取兼容性。
@@ -54,7 +54,7 @@ Hook 安装、启用、信任和实际成功运行是不同状态。`doctor` 成
 
 ## 可选闲置归档
 
-归档不由 Stop Hook 触发。用户要求归档或定期整理时，读取插件根目录 `docs/归档工作流.md`，使用本 Skill 的 `scripts/archive.py`。默认关闭，首次先展示预览；用户已经认可规则与预览后启用。不要反复要求已经提供的授权。
+归档不由 SessionEnd Hook 触发。用户要求归档或定期整理时，读取插件根目录 `docs/归档工作流.md`，使用本 Skill 的 `scripts/archive.py`。默认关闭，首次先展示预览；用户已经认可规则与预览后启用。不要反复要求已经提供的授权。
 
 程序负责筛选、缓存与复核，宿主 `set_thread_archived` 负责实际归档。没有宿主工具时只返回预览。不得恢复原任务、发送消息或运行其中未完成的工作。定时唤起只执行整理流程，不能接着做本管理话题的其他任务。
 

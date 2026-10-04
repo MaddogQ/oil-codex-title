@@ -29,7 +29,7 @@ class EfficiencyTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.backend = fixtures.FakeBackend()
         self.config = title.DEFAULTS.copy()
-        self.candidate = {'action': 'rename', 'title': '🎬 产品视频｜讲解大纲', 'reason': '明确目标'}
+        self.candidate = {'action': 'rename', "status": "active", 'title': '[创作] 产品视频｜讲解大纲', 'reason': '明确目标'}
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -166,14 +166,14 @@ class EfficiencyTests(unittest.TestCase):
         self.assertEqual(group['tokens'], {**USAGE, 'cache_write_input_tokens': 0})
         self.assertNotIn('private details', json.dumps(self.records()))
 
-    def test_retry_has_two_records_without_aggregate_double_count(self):
-        self.candidate = {'action': 'keep', 'title': '旧格式', 'reason': '保持'}
+    def test_legacy_keep_has_one_record_without_format_retry(self):
+        self.candidate = {'action': 'keep', "status": "active", 'title': '', 'reason': '保持'}
         with patch('codex_adapter.subprocess.run', side_effect=self.fake_run) as run:
             self.process(self.actual_model)
-        self.assertEqual(run.call_count, 2)
+        self.assertEqual(run.call_count, 1)
         group, = usage_report(self.root)['groups']
-        self.assertEqual(group['attempts'], 2)
-        self.assertEqual(group['tokens']['input_tokens'], 74)
+        self.assertEqual(group['attempts'], 1)
+        self.assertEqual(group['tokens']['input_tokens'], 37)
 
     def test_confirmation_and_archived_thread_create_no_model_records(self):
         with patch('codex_adapter.subprocess.run', side_effect=self.fake_run) as run:

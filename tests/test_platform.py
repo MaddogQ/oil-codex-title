@@ -2,10 +2,12 @@
 import errno
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -59,6 +61,45 @@ class PlatformTests(unittest.TestCase):
         with app.thread_lock(self.root, ID) as acquired:
             self.assertTrue(acquired)
 
+    def test_session_end_launcher_detaches_stdio_and_process(self):
+        for platform in ('win32', 'linux', 'darwin'):
+            with self.subTest(platform=platform), patch.object(sys, 'platform', platform), \
+                    patch.object(subprocess, 'DETACHED_PROCESS', 8, create=True), \
+                    patch.object(subprocess, 'CREATE_NEW_PROCESS_GROUP', 512, create=True), \
+                    patch.object(subprocess, 'Popen') as launch:
+                app.launch_session_end(ID)
+                args, options = launch.call_args
+                self.assertEqual(args[0][-2:], ['session-end', ID])
+                for stream in ('stdin', 'stdout', 'stderr'):
+                    self.assertEqual(options[stream], subprocess.DEVNULL)
+                self.assertTrue(options['close_fds'])
+                if platform == 'win32':
+                    self.assertEqual(options['creationflags'], 520)
+                else:
+                    self.assertTrue(options['start_new_session'])
+
+    def test_detached_helper_finishes_after_launcher_exits(self):
+        marker = self.root / '后台完成.txt'
+        # 仅替换子进程工作内容，使用实际 launcher 的隔离参数；不访问账号或模型。
+        code = '''
+import subprocess
+from unittest.mock import patch
+import oil_codex_title as app
+real_popen = subprocess.Popen
+child = "import sys,time; from pathlib import Path; time.sleep(0.5); Path(sys.argv[1]).write_text('done')"
+def spawn(args, **options):
+    return real_popen([sys.executable, '-c', child, sys.argv[2]], **options)
+with patch.object(subprocess, 'Popen', side_effect=spawn):
+    app.launch_session_end(sys.argv[3])
+'''
+        parent = self.child(code, marker, ID)
+        output, errors = parent.communicate(timeout=5)
+        self.assertEqual((parent.returncode, output, errors), (0, '', ''))
+        deadline = time.monotonic() + 5
+        while not marker.exists() and time.monotonic() < deadline:
+            time.sleep(0.05)
+        self.assertEqual(marker.read_text(), 'done')
+
     def make_npm_binary(self, folder, target='x86_64-pc-windows-msvc', layout='bin'):
         exe = self.root / folder / 'vendor' / target / layout / 'codex.exe'
         exe.parent.mkdir(parents=True)
@@ -90,9 +131,9 @@ class PlatformTests(unittest.TestCase):
             self.assertEqual(find_codex(), exe)
 
     def test_windows_paths_cannot_leak_into_titles(self):
-        for name in (r'🧩 C:\Users\example\app｜修复', r'🧩 \\server\private｜修复', '🧩 C:/Users/example/app｜修复'):
+        for name in (r'[排障] C:\Users\example\app｜修复', r'[排障] \\server\private｜修复', '[排障] C:/Users/example/app｜修复'):
             with self.subTest(name=name), self.assertRaises(ValueError):
-                app.validate_candidate({'action':'rename','title':name,'reason':''}, '')
+                app.validate_candidate({'action':'rename', "status": "active",'title':name,'reason':''}, '')
 
     def test_utf8_status_roundtrip_with_legacy_io_encoding(self):
         app.atomic_json(self.root / 'config.json', {'label':'中文 🧩｜标题'})
@@ -103,7 +144,7 @@ class PlatformTests(unittest.TestCase):
         self.assertEqual(json.loads(p.stdout.decode('utf-8'))['config']['label'],'中文 🧩｜标题')
 
     def test_model_process_launch_accepts_windows_flags_and_unicode_json(self):
-        expected = {"action":"rename","title":"🧩 中文工具｜修复","reason":"目标明确"}
+        expected = {"action":"rename", "status": "active","title":"[排障] 中文工具｜修复","reason":"目标明确"}
         def fake_run(args, **kwargs):
             self.assertEqual(kwargs["creationflags"], 0)
             self.assertEqual(kwargs["encoding"], "utf-8")
@@ -114,6 +155,25 @@ class PlatformTests(unittest.TestCase):
         with patch("codex_adapter.process_options", return_value={"creationflags":0}), patch("codex_adapter.subprocess.run", side_effect=fake_run):
             candidate, _ = generate_title("codex.exe",app.DEFAULTS,{"current_title":"旧标题","original_goal":"修复中文工具"},ROOT)
         self.assertEqual(candidate,expected)
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows command entry')
+    def test_windows_hook_runs_with_python_without_py_launcher(self):
+        plugin = self.root / '插件 目录'
+        shutil.copytree(ROOT / 'scripts', plugin / 'scripts', ignore=shutil.ignore_patterns('__pycache__'))
+        config = json.loads((ROOT / 'hooks/hooks.json').read_text(encoding='utf-8'))
+        env = os.environ | {'OIL_CODEX_TITLE_DATA': str(self.root / 'state'),
+                            'OIL_CODEX_TITLE_WORKER': '1'}
+        for event in ('Stop', 'SessionEnd'):
+            with self.subTest(event=event):
+                hook = config['hooks'][event][0]['hooks'][0]
+                if event == 'SessionEnd':
+                    self.assertFalse(hook.get('async', False))
+                    self.assertLessEqual(hook['timeout'], 3)
+                command = hook['commandWindows']
+                self.assertTrue(command.startswith('python -X utf8 '))
+                result = subprocess.run(command.replace('${PLUGIN_ROOT}', str(plugin)), shell=True,
+                                        input='ignored', capture_output=True, encoding='utf-8', env=env, timeout=10)
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '{}\n', ''))
 
     def test_fixture_evaluator_can_read_chinese_in_legacy_locale(self):
         env = os.environ | {'PYTHONUTF8':'0','PYTHONIOENCODING':'utf-8'}

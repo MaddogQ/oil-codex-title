@@ -194,13 +194,18 @@ class CodexBackend:
                 stream.close()
 
 
+CATEGORIES = ("实现", "设计", "排障", "优化", "配置", "分析", "调研", "规划", "创作")
+
 SCHEMA = {
     "type": "object", "additionalProperties": False,
     "properties": {
         "action": {"type": "string", "enum": ["keep", "rename"]},
-        "title": {"type": "string"}, "reason": {"type": "string"},
+        "title": {"type": "string",
+                  "pattern": r"^(?:\[(?:" + "|".join(CATEGORIES) + r")\] [^｜|]+｜[^｜|]+)?$"},
+        "reason": {"type": "string"},
+        "status": {"type": "string", "enum": ["active", "completed"]},
     },
-    "required": ["action", "title", "reason"],
+    "required": ["action", "title", "status", "reason"],
 }
 
 
@@ -209,7 +214,7 @@ def normalize_project_prefix(candidate, context):
     hint = re.sub(r"[\W_]+", "", context.get("project_hint", ""))
     if candidate.get("action") != "rename" or not hint or " " not in candidate.get("title", ""):
         return candidate
-    emoji, body = candidate["title"].split(" ", 1)
+    category, body = candidate["title"].split(" ", 1)
     # 兼容 kite-lms、Kite LMS、KiteLMS，不把 Maple 错当成 MaplePay。
     pattern = r"^" + r"[\s._-]*".join(re.escape(c) for c in hint) + r"\s+(.+)$"
     match = re.match(pattern, body, re.IGNORECASE)
@@ -218,7 +223,7 @@ def normalize_project_prefix(candidate, context):
     remaining = match.group(1).strip()
     if len(remaining) < 2 or re.match(r"^(与|和|到|及|→|->|vs\b|to\b)", remaining, re.IGNORECASE):
         return candidate
-    return {**candidate, "title": emoji + " " + remaining}
+    return {**candidate, "title": category + " " + remaining}
 
 
 def _generate_title_once(binary, config, context, plugin_root, *, before_model=None):
@@ -228,8 +233,10 @@ def _generate_title_once(binary, config, context, plugin_root, *, before_model=N
         message.get("text", "") for turn in context.get("recent_turns", [])
         for message in turn.get("messages", []) if message.get("role") == "user"
     ]
-    if all(re.sub(r"[\W_]+", "", text).casefold() in trivial for text in user_texts):
-        return {"action": "keep", "title": context.get("current_title", ""),
+    if context.get("completion_status", "active") == "active" and all(
+        re.sub(r"[\W_]+", "", text).casefold() in trivial for text in user_texts
+    ):
+        return {"action": "keep", "title": context.get("current_canonical_title", ""), "status": "active",
                 "reason": "只有问候或确认，缺少新的命名依据"}, {}
     result, usage = generate_json(binary, config, context, plugin_root / "prompts/naming.md", SCHEMA,
                                  before_model=before_model)
@@ -296,20 +303,5 @@ def generate_json(binary, config, context, policy, output_schema, *, before_mode
 
 
 def generate_title(binary, config, context, plugin_root, *, before_model=None):
-    deadline = time.monotonic() + config.get("model_timeout_seconds", 100)
-    candidate, usage = _generate_title_once(binary, config, context, plugin_root, before_model=before_model)
-    current = context.get("current_title", "")
-    legacy = current.count("｜") != 1 or current.startswith("🛠")
-    # 模型偶尔误把旧标题判断为结构合规。只复核一次，不自行猜对象或强制改名。
-    # 问候过滤不调用模型且无 usage，仍然直接保留。
-    remaining = deadline - time.monotonic()
-    if candidate.get("action") == "keep" and legacy and usage and remaining > 0:
-        # 格式复核共享首次生成的时间预算，不能使 Hook 的最坏耗时翻倍。
-        retry_config = {**config, "model_timeout_seconds": remaining}
-        candidate, retry_usage = _generate_title_once(binary, retry_config, {
-            **context,
-            "naming_feedback": "原标题尚未符合 emoji 对象｜目标结构，或仍使用旧开发图标。请重新核对：有明确对象和目标时只迁移格式，保留准确主线；只有依据不足时 keep。不要误称旧格式已合规。",
-        }, plugin_root, before_model=before_model)
-        usage = {key: usage.get(key, 0) + retry_usage.get(key, 0)
-                 for key in usage.keys() | retry_usage.keys()}
-    return candidate, usage
+    # 不因历史标题格式进行额外模型调用或迁移。
+    return _generate_title_once(binary, config, context, plugin_root, before_model=before_model)

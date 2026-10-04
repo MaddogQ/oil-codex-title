@@ -1,0 +1,892 @@
+[
+  {
+    "id": "整体收尾-可以了，谢谢",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "可以了，谢谢"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-确认了，可以不用追踪了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "确认了，可以不用追踪了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-验收通过，收尾吧",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "验收通过，收尾吧"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-验收没问题，可以收尾",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "验收没问题，可以收尾"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-这个通过了，结束吧",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "这个通过了，结束吧"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-可以收尾了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "可以收尾了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-这个解决了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "这个解决了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-不用继续了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "不用继续了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-不用追踪了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "不用追踪了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-done",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "done"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-就这样",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "就这样"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "整体收尾-问题已经修好了",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "问题已经修好了"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-好",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "好"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-好的",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "好的"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-可以",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "可以"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-收到",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "收到"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-谢谢",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "谢谢"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-ok",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "ok"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-可以，继续",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "可以，继续"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "普通确认-好的，下一步看调用链",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "好的，下一步看调用链"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "部分验收后继续",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "这部分验收通过，接下来继续分析后台调用的参数来源"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "验收后新实质目标",
+    "context": {
+      "current_title": "[实现] 邮箱注册｜功能实现",
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "实现邮箱注册",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "这个功能验收通过，接下来处理登录页，现在开始实现登录页并作为接下来的主任务"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "登录"
+      ],
+      "reject": [],
+      "category": "实现"
+    }
+  },
+  {
+    "id": "助手全部完成不足",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "请继续分析调用机制"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "assistant",
+              "text": "全部完成，已经处理好了。"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "引用收尾不算用户收尾",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "文档里的例句是“验收通过，收尾吧”，请解释这种调用逻辑"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "不完整收尾证据",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "active",
+      "completion_context_complete": false,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "验收通过，收尾吧"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "完成后仅确认保持完成",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "completed",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "谢谢"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "完成后继续重新激活",
+    "context": {
+      "current_title": "[分析] Codex｜Luna 后台调用",
+      "current_canonical_title": "[分析] Codex｜Luna 后台调用",
+      "completion_status": "completed",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "分析 Codex 的 Luna 后台调用机制",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "可以，继续"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "分析",
+      "exact_title": "[分析] Codex｜Luna 后台调用"
+    }
+  },
+  {
+    "id": "完成后同主线新实质任务",
+    "context": {
+      "current_title": "[设计] 存档管理｜删除交互",
+      "current_canonical_title": "[设计] 存档管理｜删除交互",
+      "completion_status": "completed",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计存档删除交互",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "继续实现刚才设计的存档删除交互并补测试"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "contains": [],
+      "reject": [],
+      "category": "设计",
+      "exact_title": "[设计] 存档管理｜删除交互"
+    }
+  },
+  {
+    "id": "完成后长期转向",
+    "context": {
+      "current_title": "[设计] 存档管理｜删除交互",
+      "current_canonical_title": "",
+      "completion_status": "completed",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "设计存档删除交互",
+      "recent_turns": [
+        {
+          "id": "0",
+          "messages": [
+            {
+              "role": "user",
+              "text": "存档管理已结束。现在主任务改成研究支付供应商，请搜索不同供应商的现状"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "user",
+              "text": "继续调研支付供应商的费用和集成文档"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "rename",
+      "status": "active",
+      "contains": [
+        "支付"
+      ],
+      "reject": [],
+      "category": "调研"
+    }
+  }
+]

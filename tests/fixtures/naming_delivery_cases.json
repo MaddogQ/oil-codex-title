@@ -1,0 +1,137 @@
+[
+  {
+    "id": "交付完成",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "修复导出面板布局",
+      "recent_turns": [
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "user",
+              "text": "修复面板布局"
+            },
+            {
+              "role": "assistant",
+              "text": "布局修复和回归通过，尚未提交。"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "messages": [
+            {
+              "role": "user",
+              "text": "提交并推送，更新 PR 的修改范围"
+            },
+            {
+              "role": "assistant",
+              "text": "已推送修复提交，PR 的修改范围与验证说明已更新。远程已核对，工作区干净，未合并。"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "completed",
+      "category": "排障",
+      "exact_title": "[排障] 导出面板｜布局修复"
+    }
+  },
+  {
+    "id": "推送失败",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "修复导出面板布局",
+      "recent_turns": [
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "user",
+              "text": "修复面板布局"
+            },
+            {
+              "role": "assistant",
+              "text": "布局修复和回归通过，尚未提交。"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "messages": [
+            {
+              "role": "user",
+              "text": "提交并推送，更新 PR 的修改范围"
+            },
+            {
+              "role": "assistant",
+              "text": "已提交，但推送失败，PR 尚未更新，需要继续处理。"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "category": "排障",
+      "exact_title": "[排障] 导出面板｜布局修复"
+    }
+  },
+  {
+    "id": "仍需验收",
+    "context": {
+      "current_title": "[排障] 导出面板｜布局修复",
+      "current_canonical_title": "[排障] 导出面板｜布局修复",
+      "completion_status": "active",
+      "completion_context_complete": true,
+      "project_hint": "",
+      "original_goal": "修复导出面板布局",
+      "recent_turns": [
+        {
+          "id": "1",
+          "messages": [
+            {
+              "role": "user",
+              "text": "修复面板布局"
+            },
+            {
+              "role": "assistant",
+              "text": "布局修复和回归通过，尚未提交。"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "messages": [
+            {
+              "role": "user",
+              "text": "提交并推送，更新 PR 的修改范围"
+            },
+            {
+              "role": "assistant",
+              "text": "已推送并更新 PR，但导出图片仍有错位，需要继续修复并验收。"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "action": "keep",
+      "status": "active",
+      "category": "排障",
+      "exact_title": "[排障] 导出面板｜布局修复"
+    }
+  }
+]

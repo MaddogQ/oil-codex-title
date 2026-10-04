@@ -1,0 +1,131 @@
+{
+  "model": "gpt-5.6-luna",
+  "service_tier": "priority",
+  "cases": 5,
+  "passed": 5,
+  "model_cases": 5,
+  "median_seconds": 3.41,
+  "notice": "passed 检查模型输出经程序确定性保护后的决策；model_candidate/model_errors 单独保留原始模型表现。有限合成案例不代表普遍准确率，也不验证桌面显示。",
+  "results": [
+    {
+      "case": "直接合并后交付",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "PR已合并且布局修复已验证，无剩余工作",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "PR已合并且布局修复已验证，无剩余工作",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.48,
+      "usage": {
+        "input_tokens": 8022,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 93,
+        "reasoning_output_tokens": 40
+      }
+    },
+    {
+      "case": "验收合入后保留备份",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "验收通过且已合入 main，用户要求收尾",
+      "status": "completed",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "验收通过且已合入 main，用户要求收尾",
+        "status": "completed"
+      },
+      "model_errors": [],
+      "seconds": 3.41,
+      "usage": {
+        "input_tokens": 8027,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 31
+      }
+    },
+    {
+      "case": "合并失败仍需处理",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "合并失败且仍有冲突待处理",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "合并失败且仍有冲突待处理",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 4.12,
+      "usage": {
+        "input_tokens": 8018,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 47,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "case": "自动合并尚未落地",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "自动合并仍在等待 CI，尚未进入 main",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "自动合并仍在等待 CI，尚未进入 main",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.31,
+      "usage": {
+        "input_tokens": 8008,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 30
+      }
+    },
+    {
+      "case": "合入后部署尚未完成",
+      "action": "keep",
+      "title": "[排障] 导出面板｜布局修复",
+      "reason": "主线仍需修复并完成部署验收",
+      "status": "active",
+      "passed": true,
+      "errors": [],
+      "model_candidate": {
+        "action": "keep",
+        "title": "[排障] 导出面板｜布局修复",
+        "reason": "主线仍需修复并完成部署验收",
+        "status": "active"
+      },
+      "model_errors": [],
+      "seconds": 2.75,
+      "usage": {
+        "input_tokens": 8016,
+        "cached_input_tokens": 6912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 48,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ]
+}

@@ -24,7 +24,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -33,7 +36,9 @@
       ],
       "reject": [
         "问候"
-      ]
+      ],
+      "status": "active",
+      "category": "分析"
     }
   },
   {
@@ -52,7 +57,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -63,7 +71,9 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -82,7 +92,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -93,7 +106,9 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -112,7 +127,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -123,13 +141,15 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
     "id": "提交不是新目标",
     "context": {
-      "current_title": "🧩 邮箱注册｜修复",
+      "current_title": "[排障] 邮箱注册｜修复",
       "project_hint": "maple",
       "original_goal": "修复邮箱注册",
       "recent_turns": [
@@ -160,7 +180,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "[排障] 邮箱注册｜修复",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -169,13 +192,15 @@
         "推送",
         "Maple"
       ],
-      "exact_title": "🧩 邮箱注册｜修复"
+      "exact_title": "[排障] 邮箱注册｜修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
     "id": "解释不是新目标",
     "context": {
-      "current_title": "🧩 支付回调｜幂等修复",
+      "current_title": "[排障] 支付回调｜幂等修复",
       "project_hint": "maple",
       "original_goal": "修复支付回调重复发货",
       "recent_turns": [
@@ -197,7 +222,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "[排障] 支付回调｜幂等修复",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -205,7 +233,9 @@
       "reject": [
         "Maple"
       ],
-      "exact_title": "🧩 支付回调｜幂等修复"
+      "exact_title": "[排障] 支付回调｜幂等修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -242,7 +272,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -252,7 +285,9 @@
       ],
       "reject": [
         "日程"
-      ]
+      ],
+      "status": "active",
+      "category": "创作"
     }
   },
   {
@@ -271,7 +306,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -281,7 +319,9 @@
       ],
       "reject": [
         "失业"
-      ]
+      ],
+      "status": "active",
+      "category": "创作"
     }
   },
   {
@@ -300,7 +340,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -311,7 +354,9 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -330,7 +375,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -339,13 +387,15 @@
       ],
       "reject": [
         "media-storage"
-      ]
+      ],
+      "status": "active",
+      "category": "创作"
     }
   },
   {
     "id": "准确标题保持",
     "context": {
-      "current_title": "🎨 登录表单｜设计",
+      "current_title": "[设计] 登录表单｜设计",
       "project_hint": "maple",
       "original_goal": "Maple 登录表单设计",
       "recent_turns": [
@@ -358,7 +408,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "[设计] 登录表单｜设计",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -366,11 +419,13 @@
       "reject": [
         "Maple"
       ],
-      "exact_title": "🎨 登录表单｜设计"
+      "exact_title": "[设计] 登录表单｜设计",
+      "status": "active",
+      "category": "设计"
     }
   },
   {
-    "id": "准确正文补类别",
+    "id": "准确旧正文不补格式",
     "context": {
       "current_title": "登录表单设计",
       "project_hint": "maple",
@@ -385,19 +440,27 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
+      "action": "keep",
       "contains": [
-        "登录"
+        "登录",
+        "登录表单"
       ],
       "reject": [
         "Maple",
         "Cedar",
         "Kite",
-        "Maple"
-      ]
+        "间距",
+        "报错"
+      ],
+      "status": "active",
+      "category": "设计",
+      "title_pattern": "^[^｜]*｜.*设计"
     }
   },
   {
@@ -416,18 +479,23 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
       "contains": [],
-      "reject": []
+      "reject": [],
+      "status": "active",
+      "exact_title": ""
     }
   },
   {
     "id": "仅有继续",
     "context": {
-      "current_title": "🧩 注册校验｜修复",
+      "current_title": "[排障] 注册校验｜修复",
       "project_hint": "maple",
       "original_goal": "修复 Maple 注册校验",
       "recent_turns": [
@@ -440,7 +508,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "[排障] 注册校验｜修复",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "keep",
@@ -448,7 +519,9 @@
       "reject": [
         "Maple"
       ],
-      "exact_title": "🧩 注册校验｜修复"
+      "exact_title": "[排障] 注册校验｜修复",
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -467,7 +540,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -477,11 +553,13 @@
       ],
       "reject": [
         "今日"
-      ]
+      ],
+      "status": "active",
+      "category": "调研"
     }
   },
   {
-    "id": "具体日期保留",
+    "id": "对话日期不进canonical",
     "context": {
       "current_title": "记录事项",
       "project_hint": "",
@@ -496,15 +574,23 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
       "contains": [
-        "20",
         "路演"
       ],
-      "reject": []
+      "reject": [
+        "20",
+        "9 月",
+        "九月"
+      ],
+      "status": "active",
+      "category": "规划"
     }
   },
   {
@@ -523,7 +609,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -535,7 +624,9 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -556,15 +647,20 @@
         }
       ],
       "conflicting_titles": [
-        "🎬 抖音视频｜重新发布"
-      ]
+        "[创作] 抖音视频｜重新发布"
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
       "contains": [
         "Orion"
       ],
-      "reject": []
+      "reject": [],
+      "status": "active",
+      "category": "创作"
     }
   },
   {
@@ -583,7 +679,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -594,7 +693,9 @@
         "Maple",
         "Cedar",
         "Kite"
-      ]
+      ],
+      "status": "active",
+      "category": "优化"
     }
   },
   {
@@ -613,7 +714,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -622,7 +726,8 @@
         "字幕"
       ],
       "reject": [],
-      "emoji": "🧩"
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -641,7 +746,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -651,7 +759,9 @@
       ],
       "reject": [
         "commerce-suite"
-      ]
+      ],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -670,7 +780,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -678,7 +791,9 @@
         "Maple",
         "登录"
       ],
-      "reject": []
+      "reject": [],
+      "status": "active",
+      "category": "排障"
     }
   },
   {
@@ -697,7 +812,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -705,7 +823,9 @@
         "Cedar",
         "注册"
       ],
-      "reject": []
+      "reject": [],
+      "status": "active",
+      "category": "实现"
     }
   },
   {
@@ -724,7 +844,10 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
@@ -734,11 +857,13 @@
       ],
       "reject": [
         "rednote"
-      ]
+      ],
+      "status": "active",
+      "category": "分析"
     }
   },
   {
-    "id": "旧标题迁移保留主线",
+    "id": "旧标题不迁移主线",
     "context": {
       "current_title": "🛠️ 邮箱注册修复",
       "project_hint": "",
@@ -753,13 +878,24 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
-      "contains": [],
-      "reject": [],
-      "exact_title": "🧩 邮箱注册｜修复"
+      "action": "keep",
+      "contains": [
+        "邮箱注册"
+      ],
+      "reject": [
+        "测试",
+        "提交",
+        "推送"
+      ],
+      "status": "active",
+      "category": "排障",
+      "title_pattern": "^[^｜]*｜.*修复"
     }
   },
   {
@@ -778,18 +914,26 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
+      "action": "keep",
       "contains": [
-        "Orion"
+        "Orion",
+        "视频"
       ],
-      "reject": [],
-      "emoji": "🎬",
+      "reject": [
+        "黑帧"
+      ],
       "object_contains": [
         "Orion"
-      ]
+      ],
+      "status": "active",
+      "category": "创作",
+      "title_pattern": "^[^｜]*｜.*制作"
     }
   },
   {
@@ -808,24 +952,31 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
+      "action": "keep",
       "contains": [
-        "裁剪"
+        "裁剪",
+        "clip-helper",
+        "字幕"
       ],
       "reject": [],
-      "emoji": "🧩",
       "object_contains": [
         "clip-helper"
-      ]
+      ],
+      "status": "active",
+      "category": "排障",
+      "title_pattern": "^[^｜]*｜.*修复"
     }
   },
   {
     "id": "方法整理不归页面设计",
     "context": {
-      "current_title": "🎨 沉淀页面还原方法",
+      "current_title": "[设计] 登录页面｜还原布局",
       "project_hint": "",
       "original_goal": "把页面还原经验整理成可复用的方法文档，不是实现页面",
       "recent_turns": [
@@ -838,16 +989,20 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "[设计] 登录页面｜还原布局",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
       "action": "rename",
       "contains": [],
       "reject": [],
-      "emoji": "📝",
       "object_contains": [
         "还原"
-      ]
+      ],
+      "status": "active",
+      "category": "创作"
     }
   },
   {
@@ -866,21 +1021,30 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
-      "contains": [],
+      "action": "keep",
+      "contains": [
+        "Atlas",
+        "Atlas Pro",
+        "编码"
+      ],
       "reject": [],
-      "emoji": "🔎",
       "object_contains": [
         "Atlas",
         "Atlas Pro"
-      ]
+      ],
+      "status": "active",
+      "category": "分析",
+      "title_pattern": "^[^｜]*｜.*(?:对比|比较)"
     }
   },
   {
-    "id": "无分隔符迁移不扩写",
+    "id": "无分隔符旧标题保持",
     "context": {
       "current_title": "🎨 登录表单设计",
       "project_hint": "",
@@ -895,13 +1059,23 @@
             }
           ]
         }
-      ]
+      ],
+      "current_canonical_title": "",
+      "completion_status": "active",
+      "completion_context_complete": true
     },
     "expected": {
-      "action": "rename",
-      "contains": [],
-      "reject": [],
-      "exact_title": "🎨 登录表单｜设计"
+      "action": "keep",
+      "contains": [
+        "登录表单"
+      ],
+      "reject": [
+        "间距",
+        "提示文案"
+      ],
+      "status": "active",
+      "category": "设计",
+      "title_pattern": "^[^｜]*｜.*设计"
     }
   }
 ]
